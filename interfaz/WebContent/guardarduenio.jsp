@@ -8,7 +8,7 @@
 </head>
 <body>
 	<form method="POST" action="DuenioController">
-		<p>
+		<p> 
 			Nombre: <input type="text" name="nombre" />
 		</p>
 		<p>
