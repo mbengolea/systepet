@@ -56,10 +56,11 @@
 				readonly="readonly" />
 		</p>
 		<p>
-			<input type="submit" name="ver_historia_clinica"
-				value="Historio clínica" /> <input type="submit"
-				name="editar_mascota" value="Modificar" /> <input type="submit"
-				name="nueva_consulta" value="Nueva consulta" />
+			<input type="submit" name="historia_clinica" value="Historio clínica" />
+			<!--  -->
+			<input type="submit" name="editar_mascota" value="Modificar" />
+			<!--  -->
+			<input type="submit" name="nueva_consulta" value="Nueva consulta" />
 		</p>
 	</form>
 </body>
