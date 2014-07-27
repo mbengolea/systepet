@@ -10,7 +10,7 @@
 <body>
 	<form method="POST" action="MascotaController">
 		<p>
-			Historia clínica: <input type="text" name="historia_clinica"
+			Historia clínica: <input type="text" name="nro_historia_clinica"
 				readonly="readonly" />
 		</p>
 		<p>

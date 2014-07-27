@@ -8,7 +8,7 @@
 <title>Datos de mascota</title>
 </head>
 <body>
-	<form method="POST" action="MascotaController">
+	<form method="GET" action="DuenioController">
 		<p>
 			Nombre: <input type="text" name="nombre" readonly="readonly" />
 		</p>
@@ -49,7 +49,7 @@
 		<p>
 			<input type="submit" name="nueva_mascota" value="Nueva mascota" />
 			<!--  -->
-			<input type="submit" name="editar_mascota" value="Modificar" />
+			<input type="submit" name="editar_duenio" value="Modificar" />
 		</p>
 	</form>
 </body>

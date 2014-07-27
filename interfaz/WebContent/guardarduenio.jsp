@@ -4,15 +4,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Guardar Dueño</title>
+<title>Guardar dueño</title>
 </head>
 <body>
 	<form method="POST" action="DuenioController">
 		<p> 
 			Nombre: <input type="text" name="nombre" />
 		</p>
+		<p> 
+			DNI: <input type="text" name="dni" />
+		</p>
 		<p>
 			Dirección: <input type="text" name="direccion" />
+		</p>
+		<p>
+			Teléfono: <input type="text" name="telefono" />
 		</p>
 		<p>
 			E-mail: <input type="text" name="email" />

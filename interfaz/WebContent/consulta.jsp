@@ -9,14 +9,14 @@
 <body>
 	<form method="POST" action="MascotaController">
 		<p>
-			Detalles: <textarea name="detalles" readonly="readonly"></textarea>
+			Detalles:
+			<textarea name="detalles"></textarea>
 		</p>
 		<p>
-			Vacunas: <input type="text" name="vacunas" readonly="readonly" />
+			Vacunas: <input type="text" name="vacunas" />
 		</p>
 		<p>
-			Vacunas a aplicar: <input type="text" name="vacunas_a_aplicar"
-				readonly="readonly" />
+			Vacunas a aplicar: <input type="text" readonly="readonly" />
 		</p>
 		<p>
 			<input type="submit" name="guardar_consulta" value="Guardar" />
