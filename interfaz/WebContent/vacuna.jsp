@@ -8,26 +8,27 @@
 <title>Datos de vacuna</title>
 </head>
 <body>
-	<form method="POST" action="VacunaController">
+	<form method="POST" action="VacunaController" >
+		<input type="hidden" name="vacunaId" value="${vacuna.getId()}"/>
 		<p>
-			Nombre: <input type="text" name="nombre_vacuna" readonly="readonly" />
+			Nombre: <input type="text" name="nombre_vacuna" value="${vacuna.getNombre()}" readonly="readonly" />
 		</p>
 		<p>
-			Laboratorio: <input type="text" name="laboratorio"
+			Laboratorio: <input type="text" name="laboratorio" value="${vacuna.getLaboratorio()}"
 				readonly="readonly" />
 		</p>
 		<p>
-			Composición: <input type="text" name="composicion"
+			Composición: <input type="text" name="composicion" value="${vacuna.getDroga()}"
 				readonly="readonly" />
 		</p>
 		<p>
-			Notas: <input type="text" name="notas" readonly="readonly" />
+			Notas: <input type="text" name="notas" value="${vacuna.getNotas()}" readonly="readonly" />
 		</p>
 		<p>
-			Activa: <input type="checkbox" name="activa" readonly="readonly" />
+			Activa: <input type="checkbox" name="activa" <c:if test="${vacuna.isActiva()}">checked="checked"</c:if> onClick="return false;" />
 		</p>
 		<p>
-			<input type="submit" name="borrar_vacuna" value="Baja" />
+			<input type="submit" name="borrar_vacuna" value="Baja"  onclick="return confirm('Está seguro de que quiere dar de baja esta vacuna?')"/>
 			<!--  -->
 			<input type="submit" name="editar_vacuna" value="Modificar" />
 		</p>

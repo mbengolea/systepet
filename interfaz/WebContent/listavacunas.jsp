@@ -14,11 +14,11 @@
 			<th>Laboratorio</th>
 			<th></th>
 		</tr>
-		<c:forEach var="i" begin="1" end="5">
+		<c:forEach var="vacuna" items="${vacunas}">
 			<tr>
-				<td>nombre</td>
+				<td>${vacuna.getNombre()}</td>
 				<td>labo</td>
-				<td><a href="VacunaController?vacuna=<c:out value="${i}" />">
+				<td><a href="VacunaController?vacunaId=${vacuna.getId()}">
 						Ver </a></td>
 			</tr>
 		</c:forEach>

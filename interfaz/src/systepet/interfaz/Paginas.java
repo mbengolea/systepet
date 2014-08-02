@@ -12,4 +12,5 @@ public interface Paginas {
 	static String EDITAR_VACUNA = "/editarvacuna.jsp";
 	static String VER_VACUNA = "/vacuna.jsp";
 	static String BUSCAR_VACUNA = "/buscarvacuna.jsp";
+	static String LISTAR_VACUNAS = "/listavacunas.jsp";
 }

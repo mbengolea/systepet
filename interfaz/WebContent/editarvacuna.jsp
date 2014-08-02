@@ -9,17 +9,20 @@
 </head>
 <body>
 	<form method="POST" action="VacunaController">
+		<input type="hidden" name="vacunaId" value="${vacuna.getId()}"/>
 		<p>
-			Nombre: <input type="text" name="nombre_vacuna" />
+			Nombre: <input type="text" name="nombre_vacuna" value="${vacuna.getNombre()}" />
 		</p>
 		<p>
-			Laboratorio: <input type="text" name="laboratorio" />
+			Laboratorio: <input type="text" name="laboratorio" value="${vacuna.getLaboratorio()}"
+				 />
 		</p>
 		<p>
-			Composición: <input type="text" name="composicion" />
+			Composición: <input type="text" name="composicion" value="${vacuna.getDroga()}"
+				 />
 		</p>
 		<p>
-			Notas: <input type="text" name="notas" />
+			Notas: <input type="text" name="notas" value="${vacuna.getNotas()}" />
 		</p>
 		<p>
 			<input type="submit" name="guardar" value="Guardar" />
