@@ -10,18 +10,18 @@
 <body>
 	<form method="POST" action="MascotaController">
 		<p>
-			Historia clínica: <input type="text" name="nro_historia_clinica"
+			Historia clínica: <input type="text" name="nro_historia_clinica" value="${mascota.getId()}"
 				readonly="readonly" />
 		</p>
 		<p>
-			Nombre de la mascota: <input type="text" name="nombre_mascota"
+			Nombre de la mascota: <input type="text" name="nombre_mascota" value="${mascota.getNombre()}"
 				readonly="readonly" />
 		</p>
 		<p>
-			Especie: <input type="text" name="especie" readonly="readonly" />
+			Especie: <input type="text" name="especie" value="${mascota.getEspecie()}" readonly="readonly" />
 		</p>
 		<p>
-			Raza: <input type="text" name="raza" readonly="readonly" />
+			Raza: <input type="text" name="raza" value="${mascota.getRaza()}" readonly="readonly" />
 		</p>
 		<p>
 			Fecha de nacimiento: <input type="text" name="fecha_nacimiento"

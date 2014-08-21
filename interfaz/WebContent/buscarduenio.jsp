@@ -18,7 +18,7 @@
 			Teléfono: <input type="text" name="telefono" />
 		</p>
 		<p>
-			<input type="submit" name="buscar" value="Buscar" />
+			<input type="submit" name="buscar_duenio" value="Buscar" />
 		</p>
 	</form>
 </body>

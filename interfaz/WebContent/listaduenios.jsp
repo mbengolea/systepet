@@ -16,14 +16,13 @@
 			<th>E-mail</th>
 			<th></th>
 		</tr>
-		<c:forEach var="i" begin="1" end="5">
+		<c:forEach var="duenio" items="${duenios}">
 			<tr>
-				<td><c:out value="${i}" /></td>
-				<td>nombre</td>
-				<td>dni</td>
-				<td>tel</td>
-				<td>email</td>
-				<td><a href="DuenioController?duenio=<c:out value="${i}" />">
+				<td>${duenio.getNombre()}</td>
+				<td>${duenio.getDni()}</td>
+				<td>${duenio.getTelefono()}</td>
+				<td>${duenio.getEmail()}</td>
+				<td><a href="DuenioController?duenioId=${duenio.getId()}">
 						Ver </a></td>
 			</tr>
 		</c:forEach>

@@ -5,6 +5,8 @@ public interface Paginas {
 	static String NUEVA_MASCOTA = "/nuevamascota.jsp";
 	static String VER_MASCOTA = "/mascota.jsp";
 	static String EDITAR_DUENIO = "/duenio.jsp";
+	static String LISTAR_DUENIOS = "/listaduenios.jsp";
+	static String VER_DUENIO = "/duenio.jsp";
 	static String EDITAR_MASCOTA = "/editarmascota.jsp";
 	static String HISTORIA_CLINICA = "/historiaclinica.jsp";
 	static String CONSULTA = "/consulta.jsp";
@@ -13,4 +15,5 @@ public interface Paginas {
 	static String VER_VACUNA = "/vacuna.jsp";
 	static String BUSCAR_VACUNA = "/buscarvacuna.jsp";
 	static String LISTAR_VACUNAS = "/listavacunas.jsp";
+	static String LISTAR_MASCOTAS = "/listamascotas.jsp";
 }

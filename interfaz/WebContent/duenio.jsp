@@ -9,25 +9,26 @@
 </head>
 <body>
 	<form method="GET" action="DuenioController">
+		<input type="hidden" name="duenioId" value="${duenio.getId()}"/>
 		<p>
-			Nombre: <input type="text" name="nombre" readonly="readonly" />
+			Nombre: <input type="text" name="nombre" value="${duenio.getNombre()}" readonly="readonly" />
 		</p>
 		<p>
-			DNI del dueño: <input type="text" name="dni" readonly="readonly" />
+			DNI del dueño: <input type="text" name="dni" value="${duenio.getDni()}" readonly="readonly" />
 		</p>
 		<p>
-			Teléfono: <input type="text" name="telefono" readonly="readonly" />
+			Teléfono: <input type="text" name="telefono" value="${duenio.getTelefono()}" readonly="readonly" />
 		</p>
 		<p>
-			Dirección: <input type="text" name="direccion" readonly="readonly" />
+			Dirección: <input type="text" name="direccion"  value="${duenio.getDireccion()}" readonly="readonly" />
 		</p>
 		<p>
-			Correo electrónico: <input type="text" name="e_mail"
+			Correo electrónico: <input type="text" name="e_mail" value="${duenio.getEmail()}"
 				readonly="readonly" />
 		</p>
 		<p>
-			Recibe notificaciones: <input type="text" name="notificaciones"
-				readonly="readonly" />
+			Recibe notificaciones: <input type="checkbox" name="notificaciones" <c:if test="${duenio.isRecibeNotificaciones()}">checked="checked"</c:if> onClick="return false;" 
+				/>
 		</p>
 		<table>
 			<tr>

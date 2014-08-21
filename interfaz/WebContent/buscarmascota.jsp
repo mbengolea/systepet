@@ -24,7 +24,7 @@
 			Historia clínica: <input type="text" name="historia_clinica" />
 		</p>
 		<p>
-			<input type="submit" name="buscar" value="Buscar" />
+			<input type="submit" name="buscar_mascota" value="Buscar" />
 		</p>
 	</form>
 </body>

@@ -16,13 +16,13 @@
 			<th>Dueño</th>
 			<th></th>
 		</tr>
-		<c:forEach var="i" begin="1" end="5">
+		<c:forEach  var="mascota" items="${mascotas}">
 			<tr>
-				<td><c:out value="${i}" /></td>
-				<td>nombre</td>
-				<td>Gato</td>
-				<td>dueño</td>
-				<td><a href="MascotaController?mascota=<c:out value="${i}" />">
+				<td>${mascota.getId()}</td>
+				<td>${mascota.getNombre()}</td>
+				<td>${mascota.getEspecie()}</td>
+				<td>${mascota.getNombreDuenio()}</td>
+				<td><a href="MascotaController?mascotaId=<c:out value="${mascota.getId()}" />">
 						Ver </a></td>
 			</tr>
 		</c:forEach>
