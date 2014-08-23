@@ -1,5 +1,8 @@
 package dominio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Duenio {
 	private int id;
 	private String dni;
@@ -8,6 +11,7 @@ public class Duenio {
 	private String email;
 	private boolean recibeNotificaciones;
 	private String nombre;
+	private List<Mascota> mascotas = new ArrayList<Mascota>();
 
 	public int getId() {
 		return id;
@@ -65,5 +69,20 @@ public class Duenio {
 		this.nombre = nombre;
 	}
 
+	public List<Mascota> getMascotas() {
+		return mascotas;
+	}
+
+	public void setMascotas(List<Mascota> mascotas) {
+		this.mascotas = mascotas;
+	}
 	
+	public Mascota getMascotaPorId(int id){
+		for (Mascota mascota : this.mascotas){
+			if (mascota.getId() == id){
+				return mascota;
+			}
+		}
+		return null;
+	}
 }

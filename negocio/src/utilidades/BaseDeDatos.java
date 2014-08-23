@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dominio.Consulta;
 import dominio.Duenio;
 import dominio.EspecieDeMascota;
+import dominio.HistoriaClinica;
 import dominio.Mascota;
 import dominio.Vacuna;
 
@@ -76,7 +78,32 @@ public class BaseDeDatos {
 		duenio.setRecibeNotificaciones(id % 2 == 0);
 		duenio.setEmail("email " + id);
 		duenio.setTelefono(id + " - " + id);
+		agregarMascotas(duenio);
 		return duenio;
+	}
+
+	private void agregarMascotas(Duenio duenio) {
+		for (int i = duenio.getId(); i < duenio.getId() + 3; i++) {
+			Mascota mascota = new Mascota();
+			mascota.setId(i);
+			mascota.setNombre("nombre" + i);
+			mascota.setFechaNacimiento(new Date());
+			mascota.setRaza("raza" + i);
+			mascota.setVivo(i % 2 == 0);
+			mascota.setEspecie(EspecieDeMascota.FELINO);
+			mascota.setDuenio(duenio);
+			duenio.getMascotas().add(mascota);
+			agregarHistoriaClinica(mascota);
+		}
+	}
+
+	private void agregarHistoriaClinica(Mascota mascota) {
+		HistoriaClinica hist = new HistoriaClinica();
+		for (int i = 0; i < mascota.getId(); i++) {
+			Consulta consulta = new Consulta(new Date(), "Nombre Vete" + i, "Observaciones muy laaargas");
+			hist.agregarConsulta(consulta );
+		}
+		mascota.setHistoriaClinica(hist);
 	}
 
 	public List<MascotaBasica> buscarMascotas(FiltroMascota filtro) {
@@ -89,13 +116,21 @@ public class BaseDeDatos {
 	}
 
 	public Mascota buscarMascota(int id) {
-		Mascota mascota = new Mascota();
-		mascota.setId(id);
-		mascota.setNombre("nombre" + id);
-		mascota.setFechaNacimiento(new Date());
-		mascota.setRaza("raza" + id);
-		mascota.setVivo(id % 2 == 0);
-		mascota.setEspecie(EspecieDeMascota.FELINO);
-		return mascota;
+		int duenioId = this.buscarDuenioIdDeMascota(id);
+		Duenio duenio = this.buscarDuenio(duenioId);
+		return duenio.getMascotaPorId(id);
+	}
+
+	private int buscarDuenioIdDeMascota(int id) {
+		return id;
+	}
+
+	public void guardarMascota(Mascota mascota) {
+
+	}
+
+	public void guardarConsulta(Consulta consulta) {
+		// TODO Auto-generated method stub
+		
 	}
 }

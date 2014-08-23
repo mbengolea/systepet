@@ -8,13 +8,13 @@
 <title>Historia clínica</title>
 </head>
 <body>
-	<c:forEach var="i" begin="1" end="5">
+	<c:forEach var="consulta" items="${mascota.getHistoriaClinica().iterator()}">
 		<p>
 			Fecha: <input type="text" name="fecha" readonly="readonly"
-				value="<c:out value="${i}" />" />
+				value="${consulta.getFechaConsulta()}" />
 		</p>
 		<p>
-			Veterinario: <input type="text" name="veterinario"
+			Veterinario: <input type="text" name="veterinario" value="${consulta.getVeterinario()}"
 				readonly="readonly" />
 		</p>
 		<p>
@@ -25,7 +25,7 @@
 				readonly="readonly" />
 		</p>
 		<p>
-			Detalles: <textarea name="detalles" readonly="readonly"></textarea>
+			Detalles: <textarea name="detalles" readonly="readonly">${consulta.getObservaciones()}</textarea>
 		</p>
 		<hr/>
 	</c:forEach>

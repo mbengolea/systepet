@@ -6,9 +6,9 @@ public class FiltroMascota {
 	private String nombreDuenio;
 	private String telefono;
 	private String nombreMascota;
-	private int historiaClinica;
+	private Integer historiaClinica;
 	
-	public FiltroMascota(String dni, String nombreDuenio, String telefono, String nombreMascota, int historiaClinica) {
+	public FiltroMascota(String dni, String nombreDuenio, String telefono, String nombreMascota, Integer historiaClinica) {
 		super();
 		this.dni = dni;
 		this.nombreDuenio = nombreDuenio;
@@ -33,7 +33,7 @@ public class FiltroMascota {
 		return nombreMascota;
 	}
 
-	public int getHistoriaClinica() {
+	public Integer getHistoriaClinica() {
 		return historiaClinica;
 	}
 }

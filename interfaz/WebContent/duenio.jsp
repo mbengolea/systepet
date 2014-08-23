@@ -30,6 +30,7 @@
 			Recibe notificaciones: <input type="checkbox" name="notificaciones" <c:if test="${duenio.isRecibeNotificaciones()}">checked="checked"</c:if> onClick="return false;" 
 				/>
 		</p>
+		<p> Mascotas: </p>		
 		<table>
 			<tr>
 				<th>Historia Clínica</th>
@@ -42,7 +43,7 @@
 					<td><c:out value="${i}" /></td>
 					<td>nombre</td>
 					<td>fecha nacimiento</td>
-					<td><a href="MascotaController?mascota=<c:out value="${i}" />">
+					<td><a href="MascotaController?mascotaId=<c:out value="${i}" />">
 							Ver </a></td>
 				</tr>
 			</c:forEach>

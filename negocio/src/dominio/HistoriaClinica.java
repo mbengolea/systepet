@@ -1,22 +1,18 @@
 package dominio;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
-public class HistoriaClinica {
-	private int codigo;
-	private List<Consulta> consultas;
+public class HistoriaClinica implements Iterable<Consulta>{
+	private List<Consulta> consultas = new LinkedList<Consulta>();
 
 	public void agregarConsulta(Consulta consulta) {
+		this.consultas.add(consulta);
 	}
 
-	public Consulta proximaConsulta() {
-		return null;
-	}
-
-	public boolean hayMasConsultas() {
-		return true;
-	}
-
-	public void iterar() {
+	@Override
+	public Iterator<Consulta> iterator() {
+		return consultas.iterator();
 	}
 }

@@ -4,7 +4,7 @@ public interface Paginas {
 	static String MASCOTA_CONTROLLER = "/MascotaController";
 	static String NUEVA_MASCOTA = "/nuevamascota.jsp";
 	static String VER_MASCOTA = "/mascota.jsp";
-	static String EDITAR_DUENIO = "/duenio.jsp";
+	static String EDITAR_DUENIO = "/editarduenio.jsp";
 	static String LISTAR_DUENIOS = "/listaduenios.jsp";
 	static String VER_DUENIO = "/duenio.jsp";
 	static String EDITAR_MASCOTA = "/editarmascota.jsp";

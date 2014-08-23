@@ -10,17 +10,17 @@
 <body>
 	<form method="POST" action="MascotaController">
 		<p>
-			Nombre de la mascota: <input type="text" name="nombre_mascota" />
+			Nombre de la mascota: <input type="text" name="nombre_mascota" value="${mascota.getNombre()}" />
 		</p>
 		<p>
-			Especie: <select>
-				<option value="canino">canino</option>
-				<option value="felino">felino</option>
-				<option value="otro">otro</option>
+			Especie: <select name="especie">
+				<option value="CANINO">canino</option>
+				<option value="FELINO">felino</option>
+				<option value="OTRO">otro</option>
 			</select>
 		</p>
 		<p>
-			Raza: <input type="text" name="raza" />
+			Raza: <input type="text" name="raza" value="${mascota.getRaza()}"/>
 		</p>
 		<p>
 			Fecha de nacimiento: <input type="text" name="fecha_nacimiento" />

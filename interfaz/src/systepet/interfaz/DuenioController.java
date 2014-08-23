@@ -52,17 +52,14 @@ public class DuenioController extends HttpServlet {
 	}
 
 	private String guardarDuenio(HttpServletRequest request) {
-		String id = request.getParameter("duenioId");
 		String nombre = request.getParameter("nombre");
 		String dni = request.getParameter("dni");
 		String telefono = request.getParameter("telefono");
 		String direccion = request.getParameter("direccion");
 		String email = request.getParameter("e_mail");
 		String notificaciones = request.getParameter("notificaciones");
-		Duenio duenio;
-		if(id != null){
-			duenio = BaseDeDatos.getBaseDeDatos().buscarDuenio(Integer.parseInt(id));
-		} else {
+		Duenio duenio = (Duenio) request.getSession().getAttribute("duenio");
+		if(duenio == null){
 			duenio = new Duenio();
 		}
 		duenio.setNombre(nombre);
@@ -72,21 +69,18 @@ public class DuenioController extends HttpServlet {
 		duenio.setEmail(email);
 		duenio.setRecibeNotificaciones(notificaciones != null);
 		BaseDeDatos.getBaseDeDatos().guardarDuenio(duenio);
-		request.setAttribute("duenio", duenio);
+		request.getSession().setAttribute("duenio", duenio);
 		return Paginas.VER_DUENIO;
 	}
 
 	private String editarDuenio(HttpServletRequest request) {
-		String id = request.getParameter("duenioId");
-		Duenio duenio = BaseDeDatos.getBaseDeDatos().buscarDuenio(Integer.parseInt(id));
-		request.setAttribute("duenio", duenio);
 		return Paginas.EDITAR_DUENIO;
 	}
 
 	private String verDuenio(HttpServletRequest request) {
 		String id = request.getParameter("duenioId");
 		Duenio duenio = BaseDeDatos.getBaseDeDatos().buscarDuenio(Integer.parseInt(id));
-		request.setAttribute("duenio", duenio);
+		request.getSession().setAttribute("duenio", duenio);
 		return Paginas.VER_DUENIO;
 	}
 
@@ -97,6 +91,8 @@ public class DuenioController extends HttpServlet {
 		FiltroDuenio filtro = new FiltroDuenio(dni, nombre, tel);
 		List<DuenioBasico> duenios = BaseDeDatos.getBaseDeDatos().buscarDuenios(filtro);
 		request.setAttribute("duenios", duenios);
+		request.getSession().removeAttribute("duenio");
+		request.getSession().removeAttribute("mascota");
 		return Paginas.LISTAR_DUENIOS;
 	}
 }
