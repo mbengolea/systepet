@@ -13,7 +13,7 @@
 		<div id="contents">
 			<div class="container">
 				<div class="header">Resultado de búsqueda de dueños</div>
-				<table class="rwd-table">
+				<table>
 					<tr>
 						<th>Nombre</th>
 						<th>DNI</th>
