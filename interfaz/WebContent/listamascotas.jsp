@@ -13,7 +13,7 @@
 		<div id="contents">
 			<div class="container">
 				<div class="header">Resultado de búsqueda de mascotas</div>
-				<table>
+				<table class="tabla">
 					<tr>
 						<th>Historia Clínica</th>
 						<th>Nombre</th>
@@ -27,7 +27,7 @@
 							<td>${mascota.getNombre()}</td>
 							<td>${mascota.getEspecie()}</td>
 							<td>${mascota.getNombreDuenio()}</td>
-							<td><a href="MascotaController?mascotaId=<c:out value="${mascota.getId()}" />"> Ver </a></td>
+							<td><a class="button" href="MascotaController?mascotaId=<c:out value="${mascota.getId()}" />"> Ver </a></td>
 						</tr>
 					</c:forEach>
 				</table>

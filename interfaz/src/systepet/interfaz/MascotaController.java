@@ -1,6 +1,9 @@
 package systepet.interfaz;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -91,18 +94,39 @@ public class MascotaController extends HttpServlet {
 
 	private String guardarMascota(HttpServletRequest request) {
 		String nombre = request.getParameter("nombre_mascota");
-		String especie = request.getParameter("especie");
+		String especieString = request.getParameter("especie");
 		String raza = request.getParameter("raza");
+		String especieEspecifica = request.getParameter("especie_especifica");
+		String fechaNacimientoString = request.getParameter("fecha_nacimiento");
+		System.out.println("Fecha de nacimiento recibida: "
+				+ fechaNacimientoString);
+		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		Date fechaNacimiento = null;
+		try {
+			fechaNacimiento = formato.parse(fechaNacimientoString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		Mascota mascota = (Mascota) request.getSession()
 				.getAttribute("mascota");
+		if (mascota == null) {
+			mascota = new Mascota();
+		}
 		mascota.setNombre(nombre);
-		mascota.setRaza(raza);
-		mascota.setEspecie(EspecieDeMascota.valueOf(especie));
-		BaseDeDatos.getBaseDeDatos().guardarMascota(mascota);
-		request.getSession().setAttribute("mascota", mascota);
+		EspecieDeMascota especie = EspecieDeMascota.valueOf(especieString);
+		mascota.setEspecie(especie);
+		if (especie.tieneRaza()) {
+			mascota.setRaza(raza);
+		}
+		if (especie.necesitaEspecieEspecifica()) {
+			mascota.setEspecieEspecifica(especieEspecifica);
+		}
+		mascota.setFechaNacimiento(fechaNacimiento);
+		Mascota mascotaGuardada = BaseDeDatos.getBaseDeDatos().guardarMascota(mascota);
+		request.getSession().setAttribute("mascota", mascotaGuardada);
 		return Paginas.VER_MASCOTA;
 	}
-	
+
 	private String guardarConsulta(HttpServletRequest request) {
 		String detalles = request.getParameter("detalles");
 		Mascota mascota = (Mascota) request.getSession()

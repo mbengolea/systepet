@@ -125,12 +125,14 @@ public class BaseDeDatos {
 		return id;
 	}
 
-	public void guardarMascota(Mascota mascota) {
-
+	public Mascota guardarMascota(Mascota mascota) {
+		if (mascota.getId() <= 0){
+			mascota.setId(1);
+		}
+		return mascota;
 	}
 
 	public void guardarConsulta(Consulta consulta) {
-		// TODO Auto-generated method stub
 		
 	}
 }

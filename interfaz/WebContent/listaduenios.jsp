@@ -13,7 +13,7 @@
 		<div id="contents">
 			<div class="container">
 				<div class="header">Resultado de búsqueda de dueños</div>
-				<table>
+				<table class="tabla">
 					<tr>
 						<th>Nombre</th>
 						<th>DNI</th>
@@ -27,7 +27,7 @@
 							<td>${duenio.getDni()}</td>
 							<td>${duenio.getTelefono()}</td>
 							<td>${duenio.getEmail()}</td>
-							<td><a href="DuenioController?duenioId=${duenio.getId()}"> Ver </a></td>
+							<td><a class="button" href="DuenioController?duenioId=${duenio.getId()}"> Ver </a></td>
 						</tr>
 					</c:forEach>
 				</table>

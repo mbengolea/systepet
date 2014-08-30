@@ -187,11 +187,15 @@ input[type=text] {
 	height: 22px;
 }
 
+select {
+	height: 36px;
+}
+
 input.small {
 	width: 64px;
 }
 
-input[type=text],textarea {
+input[type=text],textarea,select {
 	font-family: Arial;
 	font-size: 14px;
 	outline: 0;
@@ -205,7 +209,8 @@ input[type=text],textarea {
 }
 
 input[type=checkbox] {
-	margin-top: 10px;
+	margin-top: 7px;
+	margin-bottom: 9px;
 	border: 2px solid #f1f1f1;
 }
 
@@ -221,9 +226,10 @@ p.buttons {
 	margin-top: 10px;
 }
 
-.button {
+input[type=submit].button {
 	min-width: 80px;
 	height: 28px;
+	margin-left: 12px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -239,7 +245,7 @@ p.buttons {
 	float: right;
 }
 
-table a {
+a.button {
 	display: inline-block;
 	text-align: center;
 	text-decoration: none;
@@ -259,7 +265,7 @@ table a {
 	margin: auto;
 }
 
-table {
+table.tabla {
 	*border-collapse: collapse; /* IE7 and lower */
 	border-spacing: 0;
 	width: 550px;
@@ -278,18 +284,18 @@ table.inner-table {
 	margin-top: 40px;
 }
 
-table tr:nth-child(even) {
+table.tabla tr:nth-child(even) {
 	background-color: #e1e1e1;
 }
 
-table td,table th {
+table.tabla td,table.tabla th {
 	border-left: 1px solid #ccc;
 	border-top: 1px solid #ccc;
 	padding: 10px;
 	text-align: left;
 }
 
-table th {
+table.tabla th {
 	background-color: #dce9f9;
 	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset;
 	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset;
@@ -298,36 +304,36 @@ table th {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
 
-table td:first-child,table th:first-child {
+table.tabla td:first-child,table.tabla th:first-child {
 	border-left: none;
 }
 
-table th:first-child {
+table.tabla th:first-child {
 	-moz-border-radius: 6px 0 0 0;
 	-webkit-border-radius: 6px 0 0 0;
 	border-radius: 6px 0 0 0;
 }
 
-table th:last-child {
+table.tabla th:last-child {
 	-moz-border-radius: 0 6px 0 0;
 	-webkit-border-radius: 0 6px 0 0;
 	border-radius: 0 6px 0 0;
 	width: 100px;
 }
 
-table th:only-child {
+table.tabla th:only-child {
 	-moz-border-radius: 6px 6px 0 0;
 	-webkit-border-radius: 6px 6px 0 0;
 	border-radius: 6px 6px 0 0;
 }
 
-table tr:last-child td:first-child {
+table.tabla tr:last-child td:first-child {
 	-moz-border-radius: 0 0 0 6px;
 	-webkit-border-radius: 0 0 0 6px;
 	border-radius: 0 0 0 6px;
 }
 
-table tr:last-child td:last-child {
+table.tabla tr:last-child td:last-child {
 	-moz-border-radius: 0 0 6px 0;
 	-webkit-border-radius: 0 0 6px 0;
 	border-radius: 0 0 6px 0;

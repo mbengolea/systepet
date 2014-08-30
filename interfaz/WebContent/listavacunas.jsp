@@ -13,7 +13,7 @@
 		<div id="contents">
 			<div class="container">
 				<div class="header">Resultado de búsqueda de vacunas</div>
-				<table>
+				<table class="tabla">
 					<tr>
 						<th>Nombre</th>
 						<th>Laboratorio</th>
@@ -23,7 +23,7 @@
 						<tr>
 							<td>${vacuna.getNombre()}</td>
 							<td>labo</td>
-							<td><a href="VacunaController?vacunaId=${vacuna.getId()}"> Ver </a></td>
+							<td><a class="button" href="VacunaController?vacunaId=${vacuna.getId()}"> Ver </a></td>
 						</tr>
 					</c:forEach>
 				</table>

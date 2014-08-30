@@ -1,7 +1,8 @@
 package dominio;
 
-import java.util.Calendar;
 import java.util.Date;
+
+import dominio.Edad.Unidad;
 
 public class Mascota {
 	private int id;
@@ -86,22 +87,19 @@ public class Mascota {
 		this.historiaClinica = historiaClinica;
 	}
 
-	public int getEdadEnAnios(){
-		Calendar dobDate = Calendar.getInstance();
-		dobDate.setTime(this.fechaNacimiento);
-		Calendar today = Calendar.getInstance();
-		int curYear = today.get(Calendar.YEAR);
-		int curMonth = today.get(Calendar.MONTH);
-		int curDay = today.get(Calendar.DAY_OF_MONTH);
-
-		int year = dobDate.get(Calendar.YEAR);
-		int month = dobDate.get(Calendar.MONTH);
-		int day = dobDate.get(Calendar.DAY_OF_MONTH);
-
-		int age = curYear - year;
-		if (curMonth < month || (month == curMonth && curDay < day)) {
-		    age--;
+	public Edad getEdad(){
+		long diff = new Date().getTime() - this.fechaNacimiento.getTime();
+		int dias = (int) (diff / (24 * 60 * 60 * 1000));
+		if (dias > 90) {
+			int meses = dias / 30;
+			if (meses > 12) {
+				int anios = dias / 365;
+				return new Edad(anios, Unidad.ANIO);
+			} else {
+				return new Edad(meses, Unidad.MES);
+			}
+		} else {
+			return new Edad(dias, Unidad.DIA);
 		}
-		return age;
 	}
 }

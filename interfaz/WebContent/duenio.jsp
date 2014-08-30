@@ -43,7 +43,7 @@
 						<p>
 							<label class="for-inner-table" for="mascotas">Mascotas:</label>
 						</p>
-						<table class="inner-table">
+						<table class="tabla inner-table">
 							<tr>
 								<th>Historia Clínica</th>
 								<th>Nombre</th>
@@ -55,7 +55,7 @@
 									<td><c:out value="${i}" /></td>
 									<td>nombre</td>
 									<td>fecha nacimiento</td>
-									<td><a href="MascotaController?mascotaId=<c:out value="${i}" />"> Ver </a></td>
+									<td><a class="button" href="MascotaController?mascotaId=<c:out value="${i}" />"> Ver </a></td>
 								</tr>
 							</c:forEach>
 						</table>

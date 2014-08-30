@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Editar mascota</title>
 <%@ include file="dependencies.html"%>
+<%@ include file="para_mascota.html"%>
 </head>
 <body>
 	<div id="wrapper">
@@ -16,24 +17,27 @@
 				<div class="contents">
 					<form method="POST" action="MascotaController">
 						<p>
-							<label for="nombre_mascota"> Nombre de la mascota: <input type="text" name="nombre_mascota"
+							<label for="nombre_mascota"> Nombre de la mascota:</label> <input type="text" name="nombre_mascota"
 								value="${mascota.getNombre()}" />
 						</p>
 						<p>
-							<label for="especie"> Especie:</label> <select name="especie">
+							<label for="especie"> Especie:</label> <select id="especie" name="especie">
 								<option value="CANINO">canino</option>
 								<option value="FELINO">felino</option>
 								<option value="OTRO">otro</option>
 							</select>
 						</p>
-						<p>
-							<label for="raza"> Raza:</label> <input type="text" name="raza" value="${mascota.getRaza()}" />
+						<p id="raza_p">
+							<label for="raza"> Raza:</label> <input type="text" id="raza" name="raza" value="${mascota.getRaza()}" />
+						</p>
+						<p id="especie_especifica_p">
+							<label for="especie_especifica"> Especifica:</label> <input type="text" id="especie_especifica" name="especie_especifica" />
 						</p>
 						<p>
-							<label for="fecha_nacimiento"> Fecha de nacimiento:</label> <input type="text" name="fecha_nacimiento" />
+							<label for="fecha_nacimiento"> Fecha de nacimiento:</label> <input type="text"  id="fecha_nacimiento" name="fecha_nacimiento" />
 						</p>
 						<p>
-							<label for="edad"> Edad:</label> <input type="text" name="edad" readonly="readonly" />
+							<label for="edad"> Edad:</label> <input type="text" id="edad" name="edad" readonly="readonly" />
 						</p>
 						<p>
 							<input class="button" type="submit" name="guardar" value="Guardar" />

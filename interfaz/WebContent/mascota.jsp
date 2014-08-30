@@ -38,7 +38,7 @@
 								readonly="readonly" />
 						</p>
 						<p>
-							<label for="edad"> Edad:</label> <input type="text" name="edad" value="${mascota.getEdadEnAnios()}"
+							<label for="edad"> Edad:</label> <input type="text" name="edad" value="${mascota.getEdad()}"
 								readonly="readonly" />
 						</p>
 						<p>
