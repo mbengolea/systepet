@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,18 +24,32 @@
 							<label for="veterinario">Veterinario:</label><input type="text" name="veterinario"
 								value="${consulta.getVeterinario()}" readonly="readonly" />
 						</p>
+						<c:if test="${consulta.getVacunasRealizadas().size() > 0}">
+							<p>
+								<label for="vacunas">Vacunas:</label>
+								<c:forEach var="vacuna" items="${consulta.getVacunasRealizadas()}">
+									<input type="text" readonly="readonly" value="${vacuna.getNombre()}" />
+									</p>
+									<p class="no-label-p">
+								</c:forEach>
+							</p>
+						</c:if>
+					<c:if test="${consulta.getAplicacionesAgendadas().size() > 0}">
 						<p>
-							<label for="vacunas">Vacunas:</label><input type="text" name="vacunas" readonly="readonly" />
+							<label for="vacunas_a_aplicar">Vacunas a aplicar:</label>
+							<c:forEach var="aplicacionAgregada" items="${consulta.getAplicacionesAgendadas()}">
+								<input type="text" readonly="readonly"
+									value="${aplicacionAgregada.getVacuna().getNombre()}, <fmt:formatDate pattern="dd-MM-yyyy" value="${aplicacionAgregada.getFechaAplicacion() }" />" />
 						</p>
-						<p>
-							<label for="vacunas_a_aplicar">Vacunas a aplicar:</label><input type="text" name="vacunas_a_aplicar"
-								readonly="readonly" />
+						<p class="no-label-p">
+							</c:forEach>
 						</p>
-						<p>
-							<label for="detalles">Detalles:</label>
-							<textarea name="detalles" readonly="readonly">${consulta.getObservaciones()}</textarea>
-						</p>
-						<hr />
+					</c:if>
+					<p>
+						<label for="detalles">Detalles:</label>
+						<textarea name="detalles" readonly="readonly">${consulta.getObservaciones()}</textarea>
+					</p>
+					<hr />
 					</c:forEach>
 				</div>
 			</div>

@@ -100,8 +100,19 @@ public class BaseDeDatos {
 	private void agregarHistoriaClinica(Mascota mascota) {
 		HistoriaClinica hist = new HistoriaClinica();
 		for (int i = 0; i < mascota.getId(); i++) {
-			Consulta consulta = new Consulta(new Date(), "Nombre Vete" + i, "Observaciones muy laaargas");
-			hist.agregarConsulta(consulta );
+			Consulta consulta = new Consulta();
+			consulta.setFechaConsulta(new Date());
+			consulta.setVeterinario("Nombre Vete" + i);
+			consulta.setObservaciones("Observaciones muy laaargas");
+			Vacuna vacuna = new Vacuna();
+			vacuna.setNombre("vacuna1 de " + i);
+			consulta.agregarAplicacionRealizada(vacuna);
+			vacuna = new Vacuna();
+			vacuna.setNombre("vacuna2 de " + i);
+			consulta.agregarAplicacionRealizada(vacuna);
+			consulta.agregarAplicacionAgendada(new Date(), vacuna);
+			consulta.agregarAplicacionAgendada(new Date(), vacuna);
+			hist.agregarConsulta(consulta);
 		}
 		mascota.setHistoriaClinica(hist);
 	}

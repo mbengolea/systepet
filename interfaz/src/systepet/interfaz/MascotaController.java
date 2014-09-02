@@ -21,6 +21,7 @@ import utilidades.MascotaBasica;
 import dominio.Consulta;
 import dominio.EspecieDeMascota;
 import dominio.Mascota;
+import dominio.Vacuna;
 
 /**
  * Servlet implementation class MascotaController
@@ -51,10 +52,14 @@ public class MascotaController extends HttpServlet {
 			forward = this.buscarMascotas(request);
 		} else if (parameters.containsKey("guardar")) {
 			forward = guardarMascota(request);
+		} else if (parameters.containsKey("agregar_vacuna")) {
+			forward = agregarVacuna(request);
+		} else if (parameters.containsKey("agregar_aplicacion_agendada")) {
+			forward = agregarAplicacionAgendada(request);
 		} else if (parameters.containsKey("historia_clinica")) {
 			forward = Paginas.HISTORIA_CLINICA;
 		} else if (parameters.containsKey("nueva_consulta")) {
-			forward = Paginas.CONSULTA;
+			forward = nuevaConsulta(request);
 		} else if (parameters.containsKey("guardar_consulta")) {
 			forward = guardarConsulta(request);
 		} else if (parameters.containsKey("mascotaId")) {
@@ -90,6 +95,51 @@ public class MascotaController extends HttpServlet {
 				Integer.parseInt(id));
 		request.getSession().setAttribute("mascota", mascota);
 		return Paginas.VER_MASCOTA;
+	}
+	
+	private String nuevaConsulta(HttpServletRequest request) {
+		List<Vacuna> vacunas = BaseDeDatos.getBaseDeDatos().buscarVacunas(null);
+		request.getSession().setAttribute("vacunas", vacunas);
+		request.getSession().setAttribute("consulta", new Consulta());
+		return Paginas.CONSULTA;
+	}
+	
+	private String agregarVacuna(HttpServletRequest request) {
+		String idString = request.getParameter("vacunaId");
+		if (idString != null){
+			int id = Integer.parseInt(idString);
+			Consulta consulta = (Consulta) request.getSession().getAttribute("consulta");
+			List<Vacuna> vacunas = (List<Vacuna>) request.getSession().getAttribute("vacunas");
+			for (Vacuna vacuna : vacunas){
+				if (vacuna.getId() == id){
+					consulta.agregarAplicacionRealizada(vacuna);
+				}
+			}
+		}
+		return Paginas.CONSULTA;
+	}
+	
+	private String agregarAplicacionAgendada(HttpServletRequest request) {
+		String idString = request.getParameter("vacunaAAplicarId");
+		String fechaAplicacionString = request.getParameter("fecha_aplicacion");
+		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		Date fechaAplicacion = null;
+		try {
+			fechaAplicacion = formato.parse(fechaAplicacionString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		if (idString != null){
+			int id = Integer.parseInt(idString);
+			Consulta consulta = (Consulta) request.getSession().getAttribute("consulta");
+			List<Vacuna> vacunas = (List<Vacuna>) request.getSession().getAttribute("vacunas");
+			for (Vacuna vacuna : vacunas){
+				if (vacuna.getId() == id){
+					consulta.agregarAplicacionAgendada(fechaAplicacion, vacuna);
+				}
+			}
+		}
+		return Paginas.CONSULTA;
 	}
 
 	private String guardarMascota(HttpServletRequest request) {
@@ -131,7 +181,10 @@ public class MascotaController extends HttpServlet {
 		String detalles = request.getParameter("detalles");
 		Mascota mascota = (Mascota) request.getSession()
 				.getAttribute("mascota");
-		Consulta consulta = new Consulta(new Date(), "nombre Vete", detalles);
+		Consulta consulta = (Consulta) request.getSession().getAttribute("consulta");
+		consulta.setFechaConsulta(new Date());
+		consulta.setVeterinario("nombre Vete");
+		consulta.setObservaciones(detalles);
 		mascota.getHistoriaClinica().agregarConsulta(consulta);
 		BaseDeDatos.getBaseDeDatos().guardarConsulta(consulta);
 		return Paginas.VER_MASCOTA;
