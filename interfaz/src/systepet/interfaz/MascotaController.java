@@ -77,6 +77,10 @@ public class MascotaController extends HttpServlet {
 		String tel = request.getParameter("telefono");
 		String nombreMascota = request.getParameter("nombre_mascota");
 		String historiaClinicaStr = request.getParameter("historia_clinica");
+		if (!validarParaBusqueda(dni, historiaClinicaStr, tel, request)){
+			return Paginas.BUSCAR_MASCOTA;
+		}
+		
 		Integer historiaClinicaInt = null;
 		try {
 			historiaClinicaInt = Integer.parseInt(historiaClinicaStr);
@@ -89,6 +93,29 @@ public class MascotaController extends HttpServlet {
 				.buscarMascotas(filtro);
 		request.setAttribute("mascotas", mascotas);
 		return Paginas.LISTAR_MASCOTAS;
+	}
+
+	private boolean validarParaBusqueda(String dni, String historiaClinicaStr, String tel, HttpServletRequest request) {
+		boolean valido = true;
+		if (dni != null && dni.length() > 0){
+			if (!Validador.esDniValido(dni)){
+				request.setAttribute("dni_invalido", true);
+				valido = false;
+			}
+		}
+		if (historiaClinicaStr != null && historiaClinicaStr.length() > 0){
+			if (!Validador.esCodigoHistoriaClinicaValido(historiaClinicaStr)){
+				request.setAttribute("historia_clinica_invalido", true);
+				valido = false;
+			}
+		}
+		if (tel != null && tel.length() > 0){
+			if (!Validador.esTelefonoValido(tel)){
+				request.setAttribute("telefono_invalido", true);
+				valido = false;
+			}
+		}
+		return valido;
 	}
 
 	private String buscarMascota(HttpServletRequest request) {

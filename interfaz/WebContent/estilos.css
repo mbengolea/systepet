@@ -189,7 +189,21 @@ label.for-inner-table {
 }
 
 .no-label-p {
-	padding-left: 195px
+	padding-left: 195px;
+}
+
+.error-p {
+	margin-bottom: 10px;
+}
+
+.error {
+	color: red;
+	font-size: 12px;
+	padding-left: 195px;	
+}
+
+.invisible {
+	display: none;
 }
 
 input[type=text] {

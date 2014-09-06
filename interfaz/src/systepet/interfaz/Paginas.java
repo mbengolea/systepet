@@ -2,6 +2,7 @@ package systepet.interfaz;
 
 public interface Paginas {
 	static String MASCOTA_CONTROLLER = "/MascotaController";
+	static String BUSCAR_MASCOTA = "/buscarmascota.jsp";
 	static String NUEVA_MASCOTA = "/nuevamascota.jsp";
 	static String VER_MASCOTA = "/mascota.jsp";
 	static String EDITAR_DUENIO = "/editarduenio.jsp";
