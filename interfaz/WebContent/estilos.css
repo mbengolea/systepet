@@ -166,6 +166,11 @@ body {
 	text-align: left;
 }
 
+.below-buttons{
+	clear: both;
+	padding-top: 10px;	
+}
+
 p {
 	margin: 0px;
 }

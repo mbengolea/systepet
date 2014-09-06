@@ -15,6 +15,13 @@
 			<div class="container">
 				<div class="header">Historia Clínica</div>
 				<div class="contents">
+				<form method="POST" action="MascotaController">
+					<div>
+						<input class="button" type="submit" name="volver_mascota" value="Volver" />
+						<!--  -->
+						<input class="button" type="submit" name="nueva_consulta" value="Nueva consulta" />
+					</div>
+					<div class="below-buttons">
 					<c:forEach var="consulta" items="${mascota.getHistoriaClinica().iterator()}">
 						<p>
 							<label for="fecha">Fecha:</label><input type="text" name="fecha" readonly="readonly"
@@ -51,6 +58,8 @@
 					</p>
 					<hr />
 					</c:forEach>
+					</div>
+					</form>
 				</div>
 			</div>
 		</div>

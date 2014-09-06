@@ -58,6 +58,8 @@ public class MascotaController extends HttpServlet {
 			forward = agregarAplicacionAgendada(request);
 		} else if (parameters.containsKey("historia_clinica")) {
 			forward = Paginas.HISTORIA_CLINICA;
+		} else if (parameters.containsKey("volver_mascota")) {
+			forward = Paginas.VER_MASCOTA;
 		} else if (parameters.containsKey("nueva_consulta")) {
 			forward = nuevaConsulta(request);
 		} else if (parameters.containsKey("guardar_consulta")) {
