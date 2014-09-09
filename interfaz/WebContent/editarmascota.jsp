@@ -10,8 +10,8 @@
 <%@ include file="para_mascota.html"%>
 <script>
 	$(function() {
-		$("#fecha_nacimiento").datepicker("setDate", "<fmt:formatDate pattern="dd/MM/yyyy" 
-	            value="${mascota.getFechaNacimiento() }"/>");
+		$("#fecha_nacimiento").datepicker("setDate", "<c:if test="${empty error_validacion}"><fmt:formatDate pattern="dd/MM/yyyy" 
+	            value="${mascota.getFechaNacimiento()}"/></c:if><c:if test="${!empty error_validacion}">${param.fecha_nacimiento}</c:if>");
 		actualizarEdad();
 	});
 </script>
@@ -26,24 +26,37 @@
 					<form method="POST" action="MascotaController">
 						<p>
 							<label for="nombre_mascota"> Nombre de la mascota:</label> <input type="text" name="nombre_mascota"
-								value="${mascota.getNombre()}" />
+								value="${empty error_validacion ? mascota.getNombre() : param.nombre}" />
+						</p>
+						<p class="error-p <c:if test="${empty nombre_invalido}">invisible</c:if>">
+							<span class="error">El nombre es obligatorio</span>
 						</p>
 						<p>
 							<label for="especie"> Especie:</label> <select id="especie" name="especie">
-								<option value="CANINO">canino</option>
-								<option value="FELINO">felino</option>
-								<option value="OTRO">otro</option>
+								<option value="CANINO" ${'CANINO'.equals(empty error_validacion ? mascota.getEspecie().name() : param.raza) ? 'selected' : ''}>canino</option>
+								<option value="FELINO" ${'FELINO'.equals(empty error_validacion ? mascota.getEspecie().name() : param.raza) ? 'selected' : ''}>felino</option>
+								<option value="OTRO" ${'OTRO'.equals(empty error_validacion ? mascota.getEspecie().name() : param.raza) ? 'selected' : ''}>otro</option>
 							</select>
 						</p>
 						<p id="raza_p">
-							<label for="raza"> Raza:</label> <input type="text" id="raza" name="raza" value="${mascota.getRaza()}" />
+							<label for="raza"> Raza:</label> <input type="text" id="raza" name="raza" value="${empty error_validacion ? mascota.getRaza() : param.raza}" />
 						</p>
 						<p id="especie_especifica_p">
-							<label for="especie_especifica"> Especifica:</label> <input type="text" id="especie_especifica" name="especie_especifica" />
+							<label for="especie_especifica"> Especifica:</label> <input type="text" id="especie_especifica" 
+							name="especie_especifica" value="${empty error_validacion ? mascota.getEspecieEspecifica() : param.especie_especifica}" />
+						</p>
+						<p class="error-p <c:if test="${empty especie_especifica_invalida}">invisible</c:if>">
+							<span class="error">La especie específica es obligatoria</span>
 						</p>
 						<p>
 							<label for="fecha_nacimiento"> Fecha de nacimiento:</label> <input type="text"  id="fecha_nacimiento" name="fecha_nacimiento" />
 						</p>
+						<p class="error-p <c:if test="${empty fecha_nacimiento_invalida}">invisible</c:if>">
+							<span class="error">La fecha de nacimiento debe estar en formato día/mes/año</span>
+						</p>					
+						<p class="error-p <c:if test="${empty fecha_nacimiento_futuro}">invisible</c:if>">
+							<span class="error">La fecha de nacimiento no puede ser posterior al día de hoy</span>
+						</p>					
 						<p>
 							<label for="edad"> Edad:</label> <input type="text" id="edad" name="edad" readonly="readonly" />
 						</p>

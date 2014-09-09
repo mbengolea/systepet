@@ -29,6 +29,8 @@ import dominio.Vacuna;
 @WebServlet("/MascotaController")
 public class MascotaController extends HttpServlet {
 
+	private static final String FORMATO_FECHA = "dd/MM/yyyy";
+
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		ejecutar(request, response);
@@ -151,7 +153,7 @@ public class MascotaController extends HttpServlet {
 	private String agregarAplicacionAgendada(HttpServletRequest request) {
 		String idString = request.getParameter("vacunaAAplicarId");
 		String fechaAplicacionString = request.getParameter("fecha_aplicacion");
-		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat formato = new SimpleDateFormat(FORMATO_FECHA);
 		Date fechaAplicacion = null;
 		try {
 			fechaAplicacion = formato.parse(fechaAplicacionString);
@@ -179,7 +181,8 @@ public class MascotaController extends HttpServlet {
 		String fechaNacimientoString = request.getParameter("fecha_nacimiento");
 		System.out.println("Fecha de nacimiento recibida: "
 				+ fechaNacimientoString);
-		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		EspecieDeMascota especie = EspecieDeMascota.valueOf(especieString);
+		DateFormat formato = new SimpleDateFormat(FORMATO_FECHA);
 		Date fechaNacimiento = null;
 		try {
 			fechaNacimiento = formato.parse(fechaNacimientoString);
@@ -188,11 +191,18 @@ public class MascotaController extends HttpServlet {
 		}
 		Mascota mascota = (Mascota) request.getSession()
 				.getAttribute("mascota");
+		if (!validarParaGuardar(nombre, fechaNacimientoString, especie, especieEspecifica, request)){
+			if(mascota == null){
+				return Paginas.NUEVA_MASCOTA;
+			} else {
+				request.setAttribute("error_validacion", true);
+				return Paginas.EDITAR_MASCOTA;
+			}
+		}
 		if (mascota == null) {
 			mascota = new Mascota();
 		}
 		mascota.setNombre(nombre);
-		EspecieDeMascota especie = EspecieDeMascota.valueOf(especieString);
 		mascota.setEspecie(especie);
 		if (especie.tieneRaza()) {
 			mascota.setRaza(raza);
@@ -204,6 +214,33 @@ public class MascotaController extends HttpServlet {
 		Mascota mascotaGuardada = BaseDeDatos.getBaseDeDatos().guardarMascota(mascota);
 		request.getSession().setAttribute("mascota", mascotaGuardada);
 		return Paginas.VER_MASCOTA;
+	}
+
+	private boolean validarParaGuardar(String nombre,
+			String fechaNacimientoString, EspecieDeMascota especie,
+			String especieEspecifica, HttpServletRequest request) {
+		boolean valido = true;
+		if (!Validador.esNombreMascotaValido(nombre)){
+			request.setAttribute("nombre_invalido", true);
+			valido = false;
+		}
+		// validar fecha de nacimiento
+		DateFormat formato = new SimpleDateFormat(FORMATO_FECHA);
+		try {
+			Date fechaNac = formato.parse(fechaNacimientoString);
+			if (fechaNac.after(new Date())){
+				request.setAttribute("fecha_nacimiento_futuro", true);
+				valido = false;
+			}
+		} catch (ParseException e) {
+			request.setAttribute("fecha_nacimiento_invalida", true);
+			valido = false;
+		}
+		if (!Validador.esEspecieEspecificaValida(especie, especieEspecifica)){
+				request.setAttribute("especie_especifica_invalida", true);
+				valido = false;
+		}
+		return valido;
 	}
 
 	private String guardarConsulta(HttpServletRequest request) {

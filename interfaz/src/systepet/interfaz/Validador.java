@@ -1,5 +1,7 @@
 package systepet.interfaz;
 
+import dominio.EspecieDeMascota;
+
 public class Validador {
 
 	private static final String EMAIL_PATTERN = 
@@ -43,5 +45,13 @@ public class Validador {
 
 	public static boolean esNombreMascotaValido(String nombre) {
 		return nombre != null && (nombre.trim().length() > 0);
+	}
+	
+	public static boolean esEspecieEspecificaValida(EspecieDeMascota especie, String especieEspecifica){
+		if (especie.necesitaEspecieEspecifica()){
+			return  especieEspecifica != null && especieEspecifica.trim().length() > 0;
+		} else {
+			return true;
+		}
 	}
 }
