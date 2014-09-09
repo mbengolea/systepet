@@ -59,6 +59,14 @@ public class DuenioController extends HttpServlet {
 		String email = request.getParameter("e_mail");
 		String notificaciones = request.getParameter("notificaciones");
 		Duenio duenio = (Duenio) request.getSession().getAttribute("duenio");
+		if (!validarParaGuardar(dni, telefono, nombre, email, request)){
+			if(duenio == null){
+				return Paginas.NUEVO_DUENIO;
+			} else {
+				request.setAttribute("error_validacion", true);
+				return Paginas.EDITAR_DUENIO;
+			}
+		}
 		if(duenio == null){
 			duenio = new Duenio();
 		}
@@ -88,11 +96,58 @@ public class DuenioController extends HttpServlet {
 		String dni = request.getParameter("dni_duenio");
 		String nombre = request.getParameter("nombre_duenio");
 		String tel = request.getParameter("telefono");
+		if (!validarParaBusqueda(dni, tel, request)){
+			return Paginas.BUSCAR_DUENIO;
+		}
 		FiltroDuenio filtro = new FiltroDuenio(dni, nombre, tel);
 		List<DuenioBasico> duenios = BaseDeDatos.getBaseDeDatos().buscarDuenios(filtro);
 		request.setAttribute("duenios", duenios);
 		request.getSession().removeAttribute("duenio");
 		request.getSession().removeAttribute("mascota");
 		return Paginas.LISTAR_DUENIOS;
+	}
+	
+	private boolean validarParaBusqueda(String dni, String tel, HttpServletRequest request) {
+		boolean valido = true;
+		if (dni != null && dni.length() > 0){
+			if (!Validador.esDniValido(dni)){
+				request.setAttribute("dni_invalido", true);
+				valido = false;
+			}
+		}
+		if (tel != null && tel.length() > 0){
+			if (!Validador.esTelefonoValido(tel)){
+				request.setAttribute("telefono_invalido", true);
+				valido = false;
+			}
+		}
+		return valido;
+	}
+	
+	private boolean validarParaGuardar(String dni, String tel, String nombre, String email, HttpServletRequest request) {
+		boolean valido = true;
+		if (!Validador.esNombreDuenioValido(nombre)){
+			request.setAttribute("nombre_invalido", true);
+			valido = false;
+		}
+		if (dni != null && dni.length() > 0){
+			if (!Validador.esDniValido(dni)){
+				request.setAttribute("dni_invalido", true);
+				valido = false;
+			}
+		}
+		if (tel != null && tel.length() > 0){
+			if (!Validador.esTelefonoValido(tel)){
+				request.setAttribute("telefono_invalido", true);
+				valido = false;
+			}
+		}
+		if (email != null && email.length() > 0){
+			if (!Validador.esEmailValido(email)){
+				request.setAttribute("e_mail_invalido", true);
+				valido = false;
+			}
+		}
+		return valido;
 	}
 }
