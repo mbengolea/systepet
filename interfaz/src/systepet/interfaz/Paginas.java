@@ -19,4 +19,5 @@ public interface Paginas {
 	static String BUSCAR_VACUNA = "/buscarvacuna.jsp";
 	static String LISTAR_VACUNAS = "/listavacunas.jsp";
 	static String LISTAR_MASCOTAS = "/listamascotas.jsp";
+	static String SALIDA = "/salida.html";
 }
