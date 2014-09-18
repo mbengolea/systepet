@@ -54,4 +54,12 @@ public class Validador {
 			return true;
 		}
 	}
+
+	public static boolean esNombreUsuarioValido(String nombre) {
+		return nombre != null && (nombre.trim().length() > 0);
+	}
+
+	public static boolean esNombreRealUsuarioValido(String nombre) {
+		return nombre != null && (nombre.trim().length() > 0);
+	}
 }

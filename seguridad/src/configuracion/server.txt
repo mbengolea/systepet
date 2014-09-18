@@ -1,0 +1,9 @@
+Agregar en server.xml:
+
+<Realm className="org.apache.catalina.realm.JDBCRealm"
+   driverName="org.postgresql.Driver"
+   connectionURL="jdbc:postgresql://localhost/systepet"
+   connectionName="systepet"
+   connectionPassword="systepet"
+   userTable="usuarios" userNameCol="user_name" userCredCol="user_pass"
+   userRoleTable="usuariosroles" roleNameCol="role_name"/>

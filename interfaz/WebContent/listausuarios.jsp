@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Resultado de búsqueda</title>
+<title>Usuarios del sistema</title>
 <%@ include file="dependencies.html"%>
 </head>
 <body>
@@ -13,18 +13,18 @@
 		<%@ include file="menu.jsp"%>
 		<div id="contents">
 			<div class="container">
-				<div class="header">Resultado de búsqueda de vacunas</div>
+				<div class="header">Usuarios del sistema</div>
 				<table class="tabla">
 					<tr>
-						<th>Nombre</th>
-						<th>Laboratorio</th>
+						<th>Nombre de Usuario</th>
+						<th>Nombre Real</th>
 						<th></th>
 					</tr>
-					<c:forEach var="vacuna" items="${vacunas}">
+					<c:forEach var="usuario" items="${usuarios}">
 						<tr>
-							<td>${vacuna.getNombre()}</td>
-							<td>labo</td>
-							<td><a class="button" href="VacunaController?vacunaId=${vacuna.getId()}"> Ver </a></td>
+							<td>${usuario.getNombreUsuario()}</td>
+							<td>${usuario.getNombre()}</td>
+							<td><a class="button" href="UsuarioController?usuario=<c:out value="${usuario.getNombreUsuario()}" />"> Ver </a></td>
 						</tr>
 					</c:forEach>
 				</table>

@@ -9,6 +9,7 @@ import dominio.Duenio;
 import dominio.EspecieDeMascota;
 import dominio.HistoriaClinica;
 import dominio.Mascota;
+import dominio.Usuario;
 import dominio.Vacuna;
 
 public class BaseDeDatos {
@@ -137,13 +138,38 @@ public class BaseDeDatos {
 	}
 
 	public Mascota guardarMascota(Mascota mascota) {
-		if (mascota.getId() <= 0){
+		if (mascota.getId() <= 0) {
 			mascota.setId(1);
 		}
 		return mascota;
 	}
 
 	public void guardarConsulta(Consulta consulta) {
+
+	}
+
+	public List<Usuario> buscarUsuarios() {
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		for (int i = 1; i <= 3; i++) {
+			Usuario u = new Usuario();
+			u.setNombre("nombre " + i);
+			u.setPassword("password" + i);
+			u.setNombreUsuario("username" + i);
+			usuarios.add(u);
+		}
+		return usuarios;
+	}
+
+	public Usuario buscarUsuario(String nombreUsuario) {
+		Usuario u = new Usuario();
+		u.setNombre("nombre de " + nombreUsuario);
+		u.setPassword("passwordDe" + nombreUsuario);
+		u.setNombreUsuario(nombreUsuario);
+		return u;
+	}
+
+	public void guardarUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
 		
 	}
 }
