@@ -25,6 +25,10 @@
 								readonly="readonly" />
 						</p>
 						<p>
+							<label for="rol"> Rol:</label> <input type="text" name="rol" value="${usuario.getRol()}"
+								readonly="readonly" />
+						</p>
+						<p>
 							<sec:one roles="administrador">
 							<input class="button" type="submit" name="borrar_usuario" value="Baja"
 								onclick="return confirm('Está seguro de que quiere dar de baja este usuario?')" />

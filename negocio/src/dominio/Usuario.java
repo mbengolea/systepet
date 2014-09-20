@@ -5,6 +5,7 @@ public class Usuario {
 	private String nombreUsuario;
 	private String password;
 	private String nombre;
+	private Rol rol;
 
 	public String getNombreUsuario() {
 		return nombreUsuario;
@@ -28,5 +29,13 @@ public class Usuario {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
 	}
 }

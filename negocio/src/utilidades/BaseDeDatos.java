@@ -172,4 +172,9 @@ public class BaseDeDatos {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void borrarUsuario(String nombreUsuario) {
+		// TODO Auto-generated method stub
+		
+	}
 }

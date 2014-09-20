@@ -17,7 +17,7 @@
 				<div class="contents">
 					<form method="POST" action="DuenioController">
 						<p>
-							<label for="nombre"> Nombre:</label> <input type="text" name="nombre" value="${nombre}"/>
+							<label for="nombre"> Nombre:</label> <input type="text" name="nombre" value="${param.nombre}"/>
 						</p>
 						<p class="error-p <c:if test="${empty nombre_invalido}">invisible</c:if>">
 							<span class="error">El nombre no puede estar vacío</span>

@@ -62,4 +62,8 @@ public class Validador {
 	public static boolean esNombreRealUsuarioValido(String nombre) {
 		return nombre != null && (nombre.trim().length() > 0);
 	}
+
+	public static boolean esPasswordValido(String password) {
+		return password != null && (password.trim().length() > 0);
+	}
 }
