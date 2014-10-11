@@ -6,16 +6,24 @@
 			<ul>
 				<li><a href="buscarduenio.jsp">Buscar Dueños</a></li>
 				<li><a href="nuevoduenio.jsp">Nuevo Dueño</a></li>
-			</ul>
+			</ul></li>
 		<li><a href="buscarmascota.jsp">Mascotas</a></li>
-		<li><a href="buscarvacuna.jsp">Vacunas</a></li>
+		<li><a>Vacunas</a>
+			<ul>
+				<li><a href="buscarvacuna.jsp">Buscar Vacunas</a></li>
+				<li><a href="VacunaController?nueva_vacuna">Nueva Vacuna</a></li>
+			</ul>
+		</li>
 		<sec:one roles="administrador">
-			<li><a href="UsuarioController?listar">Usuarios</a>
+			<li><a>Usuarios</a>
 				<ul>
-					<li><a href="nuevousuario.jsp">Nuevo Usuario</a></li>
-				</ul>
-			</li>
+					<li><a href="UsuarioController?listar">Listar Usuarios</a></li>
+					<li><a href="UsuarioController?nuevo_usuario">Nuevo Usuario</a></li>
+				</ul></li>
 		</sec:one>
+		<li><a href="AccesoController?salir">Salir</a>
+			<ul>
+				<li><a href="UsuarioController?cambiar_mi_contrasena">Cambiar Constraseña</a></li>
+			</ul></li>
 	</ul>
-	<a href="AccesoController?salir" class="salir">Salir</a>
 </div>

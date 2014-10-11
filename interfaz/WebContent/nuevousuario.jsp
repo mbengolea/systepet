@@ -53,7 +53,7 @@
 						</p>
 						<p>
 							<sec:one roles="administrador">
-								<input class="button" type="submit" name="guardar_nuevo_usuario" value="Modificar" />
+								<input class="button" type="submit" name="guardar_nuevo_usuario" value="Guardar" />
 							</sec:one>
 						</p>
 					</form>

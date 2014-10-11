@@ -12,15 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utilidades.BaseDeDatos;
-import utilidades.DuenioBasico;
-import utilidades.FiltroDuenio;
-import dominio.Duenio;
 import dominio.Rol;
 import dominio.Usuario;
 
-/**
- * Servlet implementation class DuenioController
- */
 @WebServlet("/UsuarioController")
 public class UsuarioController extends HttpServlet {
 
@@ -40,6 +34,8 @@ public class UsuarioController extends HttpServlet {
 		Map<String, String[]> parameters = request.getParameterMap();
 		if (parameters.containsKey("listar")) {
 			forward = buscarUsuarios(request);
+		} else if (parameters.containsKey("nuevo_usuario")) {
+			forward = nuevoUsuario(request);
 		} else if (parameters.containsKey("guardar_usuario")) {
 			forward = guardarUsuario(request);
 		} else if (parameters.containsKey("cambiar_contrasena")) {
@@ -89,7 +85,7 @@ public class UsuarioController extends HttpServlet {
 		String password2 = request.getParameter("password2");
 		if (!validarParaGuardarNuevo(nombre, nombreUsuario, rol, password,
 				password2, request)) {
-			return Paginas.NUEVO_USUARIO;
+			return this.nuevoUsuario(request);
 		}
 		Usuario usuario = new Usuario();
 		usuario.setNombre(nombre);
@@ -112,7 +108,7 @@ public class UsuarioController extends HttpServlet {
 		usuario.setPassword(password.trim());
 		BaseDeDatos.getBaseDeDatos().guardarUsuario(usuario);
 		request.getSession().setAttribute("usuario", usuario);
-		if (request.getParameter("mi_contrasena") != null) {
+		if (request.getParameter("mi_contrasena") == null) {
 			return Paginas.INICIO;
 		} else {
 			return Paginas.VER_USUARIO;
@@ -135,12 +131,17 @@ public class UsuarioController extends HttpServlet {
 		String nombreUsuario = request.getParameter("nombre_usuario");
 		BaseDeDatos.getBaseDeDatos().borrarUsuario(nombreUsuario);
 		request.getSession().removeAttribute("usuario");
-		return Paginas.LISTAR_USUARIOS;
+		return this.buscarUsuarios(request);
 	}
 
 	private String editarUsuario(HttpServletRequest request) {
 		request.setAttribute("roles", Rol.values());
 		return Paginas.EDITAR_USUARIO;
+	}
+	
+	private String nuevoUsuario(HttpServletRequest request) {
+		request.setAttribute("roles", Rol.values());
+		return Paginas.NUEVO_USUARIO;
 	}
 
 	private String verUsuario(HttpServletRequest request) {

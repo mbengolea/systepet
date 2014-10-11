@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dominio.AplicacionAgendada;
+import dominio.ConfiguracionEnvioRecordatorios;
 import dominio.Consulta;
 import dominio.Duenio;
 import dominio.EspecieDeMascota;
 import dominio.HistoriaClinica;
 import dominio.Mascota;
+import dominio.Recordatorio;
+import dominio.Rol;
 import dominio.Usuario;
 import dominio.Vacuna;
 
@@ -155,6 +159,7 @@ public class BaseDeDatos {
 			u.setNombre("nombre " + i);
 			u.setPassword("password" + i);
 			u.setNombreUsuario("username" + i);
+			u.setRol(Rol.values()[i % 3]);
 			usuarios.add(u);
 		}
 		return usuarios;
@@ -165,16 +170,43 @@ public class BaseDeDatos {
 		u.setNombre("nombre de " + nombreUsuario);
 		u.setPassword("passwordDe" + nombreUsuario);
 		u.setNombreUsuario(nombreUsuario);
+		u.setRol(Rol.JEFE_VETERINARIO);
 		return u;
 	}
 
 	public void guardarUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void borrarUsuario(String nombreUsuario) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	public ConfiguracionEnvioRecordatorios buscarConfiguracionEnvioDeRecordatorios() {
+		ConfiguracionEnvioRecordatorios config = new ConfiguracionEnvioRecordatorios();
+		config.setDiasDeAnterioridad(1);
+		config.setEmailOrigen("systepet@gmail.com");
+		config.setEnvioHabilitado(true);
+		config.setUsuario("systepet");
+		config.setPassword("systepet1");
+		config.setPlantilla("Hola, ${nombre_dueño}!\nRecuerde que debe aplicarle la vacuna ${nombre_vacuna} a ${nombre_mascota} el día ${fecha_agendada}.\nVeterinaria PetyPet");
+		config.setAsunto("Prueba de envio de mail");
+		return config;
+	}
+
+	public List<Recordatorio> buscarAplicacionesAgendadas() {
+		Vacuna vacuna = new Vacuna();
+		vacuna.setNombre("antirrábica");
+		AplicacionAgendada apli = new AplicacionAgendada(new Date(), vacuna);
+		Recordatorio recordatorio = new Recordatorio("Matilde Bengolea", "Chou-Chou",
+				"tilly314@gmail.com", apli);
+		List<Recordatorio> recordatorios = new ArrayList<Recordatorio>();
+		recordatorios.add(recordatorio);
+		return recordatorios;
+	}
+
+	public void actualizarAplicacionAgendada(AplicacionAgendada aplicacion) {
 	}
 }
