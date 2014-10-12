@@ -12,14 +12,14 @@
 			<ul>
 				<li><a href="buscarvacuna.jsp">Buscar Vacunas</a></li>
 				<li><a href="VacunaController?nueva_vacuna">Nueva Vacuna</a></li>
-			</ul>
-		</li>
+			</ul></li>
 		<sec:one roles="administrador">
 			<li><a>Usuarios</a>
 				<ul>
 					<li><a href="UsuarioController?listar">Listar Usuarios</a></li>
 					<li><a href="UsuarioController?nuevo_usuario">Nuevo Usuario</a></li>
 				</ul></li>
+			<li><a href="ConfiguracionController?editar_configuracion_recordatorios">Recordatorios</a></li>
 		</sec:one>
 		<li><a href="AccesoController?salir">Salir</a>
 			<ul>

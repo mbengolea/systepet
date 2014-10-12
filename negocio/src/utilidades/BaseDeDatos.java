@@ -209,4 +209,8 @@ public class BaseDeDatos {
 
 	public void actualizarAplicacionAgendada(AplicacionAgendada aplicacion) {
 	}
+
+	public void guardarConfiguracionEnvioRecordatorios(
+			ConfiguracionEnvioRecordatorios config) {
+	}
 }

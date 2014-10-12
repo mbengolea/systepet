@@ -1,6 +1,10 @@
 package systepet.interfaz;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import dominio.EspecieDeMascota;
+import dominio.Recordatorio;
 
 public class Validador {
 
@@ -65,5 +69,27 @@ public class Validador {
 
 	public static boolean esPasswordValido(String password) {
 		return password != null && (password.trim().length() > 0);
+	}
+	
+	public static boolean esStringVacio(String paraValidar){
+		return paraValidar == null || (paraValidar.trim().length() == 0);
+	}
+
+	public static boolean esPlantillaEmailValida(String plantilla) {
+		if (plantilla == null || (plantilla.trim().length() == 0)){
+			return false;
+		} else {
+			Pattern patt = Pattern.compile("\\$\\{(.*?)\\}");
+			Matcher m = patt.matcher(plantilla);
+			while(m.find()){
+				String encontrado = m.group(1);
+				try {
+					Recordatorio.Claves.valueOf(encontrado);
+				} catch (Exception e){
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 }

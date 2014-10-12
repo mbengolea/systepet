@@ -26,4 +26,5 @@ public interface Paginas {
 	static String EDITAR_USUARIO = "/editarusuario.jsp";
 	static String CAMBIAR_CONTRASENA = "/cambiarcontrasena.jsp";
 	static String INICIO = "/buscarduenio.jsp";
+	static String EDITAR_CONFIGURACION_RECORDATORIOS = "/editarconfiguracionrecordatorios.jsp";
 }
