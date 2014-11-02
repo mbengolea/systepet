@@ -63,7 +63,7 @@ public class EnviadorDeRecordatorios {
 	}
 
 	private Session getEmailSession(final String username, final String password) {
-		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+//		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		// Get a Properties object
 		Properties props = new Properties();

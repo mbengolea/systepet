@@ -54,7 +54,8 @@ public class VacunaController extends HttpServlet {
 
 	private String darDeBajaVacuna(HttpServletRequest request) {
 		String id = request.getParameter("vacunaId");
-		Vacuna vacuna = BaseDeDatos.getBaseDeDatos().buscarVacuna(Integer.parseInt(id));
+		Vacuna vacuna = BaseDeDatos.getBaseDeDatos().buscarVacuna(
+				Integer.parseInt(id));
 		vacuna.setActiva(false);
 		BaseDeDatos.getBaseDeDatos().guardarVacuna(vacuna);
 		return Paginas.BUSCAR_VACUNA;
@@ -62,9 +63,10 @@ public class VacunaController extends HttpServlet {
 
 	private String editarVacuna(HttpServletRequest request) {
 		String id = request.getParameter("vacunaId");
-		Vacuna vacuna = BaseDeDatos.getBaseDeDatos().buscarVacuna(Integer.parseInt(id));
+		Vacuna vacuna = BaseDeDatos.getBaseDeDatos().buscarVacuna(
+				Integer.parseInt(id));
 		request.setAttribute("vacuna", vacuna);
-		return Paginas.VER_VACUNA;
+		return Paginas.EDITAR_VACUNA;
 	}
 
 	private String guardarVacuna(HttpServletRequest request) {
@@ -73,26 +75,34 @@ public class VacunaController extends HttpServlet {
 		String labo = request.getParameter("laboratorio");
 		String comp = request.getParameter("composicion");
 		String notas = request.getParameter("notas");
-		Vacuna vacuna = BaseDeDatos.getBaseDeDatos().buscarVacuna(Integer.parseInt(id));
+		Vacuna vacuna;
+		if (id != null) {
+			vacuna = BaseDeDatos.getBaseDeDatos().buscarVacuna(
+					Integer.parseInt(id));
+		} else {
+			vacuna = new Vacuna();
+		}
 		vacuna.setNombre(nombre);
 		vacuna.setLaboratorio(labo);
 		vacuna.setNotas(notas);
 		vacuna.setDroga(comp);
-		BaseDeDatos.getBaseDeDatos().guardarVacuna(vacuna);
+		vacuna = BaseDeDatos.getBaseDeDatos().guardarVacuna(vacuna);
 		request.setAttribute("vacuna", vacuna);
 		return Paginas.VER_VACUNA;
 	}
 
 	private String verVacuna(HttpServletRequest request) {
 		String id = request.getParameter("vacunaId");
-		Vacuna vacuna = BaseDeDatos.getBaseDeDatos().buscarVacuna(Integer.parseInt(id));
+		Vacuna vacuna = BaseDeDatos.getBaseDeDatos().buscarVacuna(
+				Integer.parseInt(id));
 		request.setAttribute("vacuna", vacuna);
 		return Paginas.VER_VACUNA;
 	}
 
 	private String buscarVacunas(HttpServletRequest request) {
 		String nombre = request.getParameter("nombre");
-		List<Vacuna> vacunas = BaseDeDatos.getBaseDeDatos().buscarVacunas(nombre);
+		List<Vacuna> vacunas = BaseDeDatos.getBaseDeDatos().buscarVacunas(
+				nombre);
 		request.setAttribute("vacunas", vacunas);
 		return Paginas.LISTAR_VACUNAS;
 	}

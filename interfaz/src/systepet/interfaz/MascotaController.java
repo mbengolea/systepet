@@ -129,7 +129,7 @@ public class MascotaController extends HttpServlet {
 	}
 	
 	private String nuevaConsulta(HttpServletRequest request) {
-		List<Vacuna> vacunas = BaseDeDatos.getBaseDeDatos().buscarVacunas(null);
+		List<Vacuna> vacunas = BaseDeDatos.getBaseDeDatos().buscarVacunasActivas();
 		request.getSession().setAttribute("vacunas", vacunas);
 		request.getSession().setAttribute("consulta", new Consulta());
 		return Paginas.CONSULTA;

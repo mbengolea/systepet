@@ -23,7 +23,7 @@
 					<c:forEach var="vacuna" items="${vacunas}">
 						<tr>
 							<td>${vacuna.getNombre()}</td>
-							<td>labo</td>
+							<td>${vacuna.getLaboratorio()}</td>
 							<td><a class="button" href="VacunaController?vacunaId=${vacuna.getId()}"> Ver </a></td>
 						</tr>
 					</c:forEach>

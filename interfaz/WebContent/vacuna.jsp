@@ -13,7 +13,7 @@
 		<%@ include file="menu.jsp"%>
 		<div id="contents">
 			<div class="container">
-				<div class="header">Mascota</div>
+				<div class="header">Vacuna</div>
 				<div class="contents">
 					<form method="POST" action="VacunaController">
 						<input type="hidden" name="vacunaId" value="${vacuna.getId()}" />

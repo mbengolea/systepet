@@ -2,25 +2,21 @@ package dominio;
 
 public enum Rol {
 
-	VETERINARIO("veterinario"), JEFE_VETERINARIO("jefe_veterinario", VETERINARIO), ADMINISTRADOR("administrador", JEFE_VETERINARIO);
+	VETERINARIO("veterinario", 0), JEFE_VETERINARIO("jefe_veterinario", 100), ADMINISTRADOR("administrador", 200);
 	
 	private String nombreRol;
-	private Rol rolPadre;
+	private int nivel;
 	
-	private Rol(String nombreRol) {
-		this(nombreRol, null);
-	}
-
-	private Rol(String nombreRol, Rol rolPadre) {
+	private Rol(String nombreRol, int nivel) {
 		this.nombreRol = nombreRol;
-		this.rolPadre = rolPadre;
+		this.nivel = nivel;
 	}
 
 	public String getNombreRol() {
 		return nombreRol;
 	}
 
-	public Rol getRolPadre() {
-		return rolPadre;
+	public int getNivel() {
+		return nivel;
 	}
 }

@@ -67,6 +67,7 @@ public class UsuarioController extends HttpServlet {
 				.getAttribute("usuario");
 		if (!validarParaGuardar(nombre, nombreUsuario, rol, request)) {
 			request.setAttribute("error_validacion", true);
+			request.setAttribute("roles", Rol.values());
 			return Paginas.EDITAR_USUARIO;
 		}
 		usuario.setNombre(nombre);
@@ -85,6 +86,7 @@ public class UsuarioController extends HttpServlet {
 		String password2 = request.getParameter("password2");
 		if (!validarParaGuardarNuevo(nombre, nombreUsuario, rol, password,
 				password2, request)) {
+			request.setAttribute("roles", Rol.values());
 			return this.nuevoUsuario(request);
 		}
 		Usuario usuario = new Usuario();

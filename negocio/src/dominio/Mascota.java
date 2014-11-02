@@ -85,6 +85,7 @@ public class Mascota {
 
 	public void setHistoriaClinica(HistoriaClinica historiaClinica) {
 		this.historiaClinica = historiaClinica;
+		this.historiaClinica.setMascota(this);
 	}
 
 	public Edad getEdad(){
