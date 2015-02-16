@@ -1,7 +1,9 @@
 package utilidades;
 
 import java.security.Security;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -31,8 +33,10 @@ public class EnviadorDeRecordatorios {
 		String plantilla = config.getPlantilla();
 
 		Session session = getEmailSession(username, password);
+		Date desde = new Date();
+		Date hasta = getHasta(desde, config);
 		List<Recordatorio> recordatorios = BaseDeDatos.getBaseDeDatos()
-				.buscarAplicacionesAgendadas();
+				.buscarAplicacionesAgendadas(desde, hasta);
 
 		for (Recordatorio record : recordatorios) {
 			String destino = record.getEmail();
@@ -54,6 +58,13 @@ public class EnviadorDeRecordatorios {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private Date getHasta(Date desde, ConfiguracionEnvioRecordatorios config) {
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(desde);
+		cal.add(Calendar.DATE, config.getDiasDeAnterioridad());
+		return cal.getTime();
 	}
 
 	private void recordatorioEnviado(Recordatorio record) {

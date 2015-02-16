@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -155,7 +156,7 @@ public class BaseDeDatos {
 			String sql = "SELECT id, dni, nombre, telefono, email FROM duenio ";
 			// armo la consulta con los filtros
 			boolean primerFiltro = true;
-			if (filtro.getDni() != null) {
+			if (filtro.getDni() != null && !filtro.getDni().isEmpty()) {
 				if (!primerFiltro) {
 					sql += " AND ";
 				} else {
@@ -185,7 +186,7 @@ public class BaseDeDatos {
 			PreparedStatement st = conn.prepareStatement(sql);
 			// pongo los valores en los filtros
 			int contadorDeFiltros = 1;
-			if (filtro.getDni() != null) {
+			if (filtro.getDni() != null && !filtro.getDni().isEmpty()) {
 				st.setString(contadorDeFiltros++, filtro.getDni());
 			}
 			if (filtro.getNombre() != null) {
@@ -252,7 +253,7 @@ public class BaseDeDatos {
 	public Duenio buscarDuenio(int id) {
 		try (Connection conn = this.ds.getConnection()) {
 			PreparedStatement st = conn
-					.prepareStatement("SELECT id, dni, nombre, telefono, direccion, email, notificacines FROM duenio WHERE id = ?");
+					.prepareStatement("SELECT id, dni, nombre, telefono, direccion, email, notificaciones FROM duenio WHERE id = ?");
 			st.setInt(1, id);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
@@ -381,7 +382,7 @@ public class BaseDeDatos {
 			String sql = "SELECT m.id, m.nombre, d.nombre, m.especie FROM mascota m INNER JOIN duenio d ON m.duenioid = d.id ";
 			// armo la consulta con los filtros
 			boolean primerFiltro = true;
-			if (filtro.getDni() != null) {
+			if (filtro.getDni() != null && !filtro.getDni().isEmpty()) {
 				if (!primerFiltro) {
 					sql += " AND ";
 				} else {
@@ -396,7 +397,7 @@ public class BaseDeDatos {
 				} else {
 					sql += " WHERE ";
 				}
-				sql += " d.nombred LIKE ? ";
+				sql += " d.nombre LIKE ? ";
 				primerFiltro = false;
 			}
 			if (filtro.getTelefono() != null) {
@@ -429,7 +430,7 @@ public class BaseDeDatos {
 			PreparedStatement st = conn.prepareStatement(sql);
 			// pongo los valores en los filtros
 			int contadorDeFiltros = 1;
-			if (filtro.getDni() != null) {
+			if (filtro.getDni() != null && !filtro.getDni().isEmpty()) {
 				st.setString(contadorDeFiltros++, filtro.getDni());
 			}
 			if (filtro.getNombre() != null) {
@@ -713,32 +714,86 @@ public class BaseDeDatos {
 	}
 
 	public ConfiguracionEnvioRecordatorios buscarConfiguracionEnvioDeRecordatorios() {
-		ConfiguracionEnvioRecordatorios config = new ConfiguracionEnvioRecordatorios();
-		config.setDiasDeAnterioridad(1);
-		config.setEmailOrigen("systepet@gmail.com");
-		config.setEnvioHabilitado(true);
-		config.setUsuario("systepet");
-		config.setPassword("systepet1");
-		config.setPlantilla("Hola, ${nombre_dueño}!\nRecuerde que debe aplicarle la vacuna ${nombre_vacuna} a ${nombre_mascota} el día ${fecha_agendada}.\nVeterinaria PetyPet");
-		config.setAsunto("Prueba de envio de mail");
-		return config;
+		try (Connection conn = this.ds.getConnection()) {
+			PreparedStatement st = conn
+					.prepareStatement("SELECT emailorigen, password, plantilla, habilitado, diasanterioridad, usuario, asunto FROM configenvio LIMIT 1;");
+			ResultSet rs = st.executeQuery();
+			if (rs.next()){
+				ConfiguracionEnvioRecordatorios config = new ConfiguracionEnvioRecordatorios();
+				config.setEmailOrigen(rs.getString(1));
+				config.setPassword(rs.getString(2));
+				config.setPlantilla(rs.getString(3));
+				config.setEnvioHabilitado(rs.getBoolean(4));
+				config.setDiasDeAnterioridad(rs.getInt(5));
+				config.setUsuario(rs.getString(6));
+				config.setAsunto(rs.getString(7));
+				return config;
+			} else {
+				throw new RuntimeException("No existe la configuración de envío de recordatorios");
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Error al buscar la configuración de recordatorios", e);
+		}
 	}
 
-	public List<Recordatorio> buscarAplicacionesAgendadas() {
-		Vacuna vacuna = new Vacuna();
-		vacuna.setNombre("antirrábica");
-		AplicacionAgendada apli = new AplicacionAgendada(new Date(), vacuna);
-		Recordatorio recordatorio = new Recordatorio("Matilde Bengolea",
-				"Chou-Chou", "tilly314@gmail.com", apli);
-		List<Recordatorio> recordatorios = new ArrayList<Recordatorio>();
-		recordatorios.add(recordatorio);
-		return recordatorios;
+	public List<Recordatorio> buscarAplicacionesAgendadas(Date desde, Date hasta) {
+		try (Connection conn = this.ds.getConnection()) {
+			PreparedStatement st = conn
+					.prepareStatement("SELECT r.nombreduenio, r.nombremascota, r.email, v.nombre, a.id, a.fechaaplicacion" +
+							" FROM recordatorio r " +
+							" INNER JOIN aplicacionagendada a ON r.aplicacionid = a.id " +
+							" INNER JOIN vacuna ON a.vacunaid = v.id " +
+							" WHERE a.recordatorioenviado = ? " +
+							" AND a.fechaaplicacion >= ? " +
+							" AND a.fechaaplicacion <= ? ");
+			st.setBoolean(1, false);
+			st.setTimestamp(2, new Timestamp(desde.getTime()));
+			st.setTimestamp(3, new Timestamp(hasta.getTime()));
+			ResultSet rs = st.executeQuery();
+			List<Recordatorio> recordatorios = new ArrayList<Recordatorio>();
+			while (rs.next()){
+				Vacuna vacuna = new Vacuna();
+				vacuna.setNombre(rs.getString(4));
+				AplicacionAgendada apli = new AplicacionAgendada(rs.getDate(6), vacuna);
+				apli.setId(rs.getInt(5));
+				apli.setRecordatorioEnviado(false);
+				Recordatorio recordatorio = new Recordatorio(rs.getString(1),
+						rs.getString(2), rs.getString(3), apli);
+				recordatorios.add(recordatorio);
+			} 
+			return recordatorios;
+		} catch (SQLException e) {
+			throw new RuntimeException("Error al buscar los recordatorios", e);
+		}
 	}
 
 	public void actualizarAplicacionAgendada(AplicacionAgendada aplicacion) {
+		try (Connection conn = this.ds.getConnection()) {
+			PreparedStatement st = conn
+					.prepareStatement("UPDATE aplicacionagendada SET recordatorioenviado = ? WHERE id = ?;");
+			st.setBoolean(1, aplicacion.isRecordatorioEnviado());
+			st.setInt(2, aplicacion.getId());
+			st.execute();
+		} catch (SQLException e) {
+			throw new RuntimeException("Error al actualizar la acplicación agendada", e);
+		}		
 	}
 
 	public void guardarConfiguracionEnvioRecordatorios(
 			ConfiguracionEnvioRecordatorios config) {
+		try (Connection conn = this.ds.getConnection()) {
+			PreparedStatement st = conn
+					.prepareStatement("UPDATE configenvio SET emailorigen=?, password=?, plantilla=?, habilitado=?, diasanterioridad=?, usuario=?, asunto=?;");
+			st.setString(1, config.getEmailOrigen());
+			st.setString(2, config.getPassword());
+			st.setString(3, config.getPlantilla());
+			st.setBoolean(4, config.isEnvioHabilitado());
+			st.setInt(5, config.getDiasDeAnterioridad());
+			st.setString(6, config.getUsuario());
+			st.setString(7, config.getAsunto());
+			st.execute();
+		} catch (SQLException e) {
+			throw new RuntimeException("Error al guardar la configuración de recordatorios", e);
+		}
 	}
 }

@@ -26,7 +26,7 @@
 					<c:forEach var="consulta" items="${mascota.getHistoriaClinica().iterator()}">
 						<p>
 							<label for="fecha">Fecha:</label><input type="text" name="fecha" readonly="readonly"
-								value="${consulta.getFechaConsulta()}" />
+								value="<fmt:formatDate pattern="dd-MM-yyyy" value="${consulta.getFechaConsulta()}" />" />
 						</p>
 						<p>
 							<label for="veterinario">Veterinario:</label><input type="text" name="veterinario"

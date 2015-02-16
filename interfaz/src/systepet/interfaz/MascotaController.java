@@ -19,8 +19,10 @@ import utilidades.BaseDeDatos;
 import utilidades.FiltroMascota;
 import utilidades.MascotaBasica;
 import dominio.Consulta;
+import dominio.Duenio;
 import dominio.EspecieDeMascota;
 import dominio.Mascota;
+import dominio.Usuario;
 import dominio.Vacuna;
 
 /**
@@ -153,14 +155,16 @@ public class MascotaController extends HttpServlet {
 	private String agregarAplicacionAgendada(HttpServletRequest request) {
 		String idString = request.getParameter("vacunaAAplicarId");
 		String fechaAplicacionString = request.getParameter("fecha_aplicacion");
-		DateFormat formato = new SimpleDateFormat(FORMATO_FECHA);
-		Date fechaAplicacion = null;
-		try {
-			fechaAplicacion = formato.parse(fechaAplicacionString);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 		if (idString != null){
+			DateFormat formato = new SimpleDateFormat(FORMATO_FECHA);
+			Date fechaAplicacion = null;
+			try {
+				fechaAplicacion = formato.parse(fechaAplicacionString);
+			} catch (ParseException e) {
+				request.setAttribute("fecha_invalida", true);
+				request.setAttribute("error_validacion", true);
+				return Paginas.CONSULTA;
+			}
 			int id = Integer.parseInt(idString);
 			Consulta consulta = (Consulta) request.getSession().getAttribute("consulta");
 			List<Vacuna> vacunas = (List<Vacuna>) request.getSession().getAttribute("vacunas");
@@ -179,6 +183,7 @@ public class MascotaController extends HttpServlet {
 		String raza = request.getParameter("raza");
 		String especieEspecifica = request.getParameter("especie_especifica");
 		String fechaNacimientoString = request.getParameter("fecha_nacimiento");
+		String vive = request.getParameter("vive");
 		System.out.println("Fecha de nacimiento recibida: "
 				+ fechaNacimientoString);
 		EspecieDeMascota especie = EspecieDeMascota.valueOf(especieString);
@@ -211,6 +216,8 @@ public class MascotaController extends HttpServlet {
 			mascota.setEspecieEspecifica(especieEspecifica);
 		}
 		mascota.setFechaNacimiento(fechaNacimiento);
+		mascota.setVivo(vive != null);
+		mascota.setDuenio((Duenio) request.getSession().getAttribute("duenio"));
 		Mascota mascotaGuardada = BaseDeDatos.getBaseDeDatos().guardarMascota(mascota);
 		request.getSession().setAttribute("mascota", mascotaGuardada);
 		return Paginas.VER_MASCOTA;
@@ -244,15 +251,18 @@ public class MascotaController extends HttpServlet {
 	}
 
 	private String guardarConsulta(HttpServletRequest request) {
+		String nombreUsuario = request.getUserPrincipal().getName();
+		Usuario usuario = BaseDeDatos.getBaseDeDatos().buscarUsuario(nombreUsuario);
 		String detalles = request.getParameter("detalles");
 		Mascota mascota = (Mascota) request.getSession()
 				.getAttribute("mascota");
 		Consulta consulta = (Consulta) request.getSession().getAttribute("consulta");
 		consulta.setFechaConsulta(new Date());
-		consulta.setVeterinario("nombre Vete");
+		consulta.setVeterinario(usuario.getNombre());
 		consulta.setObservaciones(detalles);
 		mascota.getHistoriaClinica().agregarConsulta(consulta);
 		BaseDeDatos.getBaseDeDatos().guardarConsulta(consulta);
+		request.getSession().removeAttribute("consulta");
 		return Paginas.VER_MASCOTA;
 	}
 }

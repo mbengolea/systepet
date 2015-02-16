@@ -29,7 +29,7 @@
 					<form method="POST" action="MascotaController">
 						<p>
 							<label for="detalles">Detalles:</label>
-							<textarea name="detalles"></textarea>
+							<textarea name="detalles">${param.detalles}</textarea>
 						</p>
 						<div id="vacunas">
 							<p>
@@ -40,6 +40,7 @@
 							<p class="no-label-p">
 								</c:forEach>
 								<select name="vacunaId">
+									<option selected disabled style="display:none" value=''></option>
 									<c:forEach var="vacuna" items="${vacunas}">
 										<option value="${vacuna.getId()}">${vacuna.getNombre()}</option>
 									</c:forEach>
@@ -55,6 +56,7 @@
 							<p class="no-label-p">
 								</c:forEach>
 								<select name="vacunaAAplicarId">
+									<option selected disabled style="display:none" value=''></option>
 									<c:forEach var="vacuna" items="${vacunas}">
 										<option value="${vacuna.getId()}">${vacuna.getNombre()}</option>
 									</c:forEach>
@@ -62,7 +64,10 @@
 								<p class="no-label-p">
 								<input type="text" id="fecha_aplicacion" name="fecha_aplicacion" />
 								<input class="small-button" type="submit" name="agregar_aplicacion_agendada" value="+" />
-							</p>
+								</p>
+								<p class="error-p <c:if test="${empty fecha_invalida}">invisible</c:if>">
+									<span class="error">La fecha de aplicacion no puede estar vacía</span>
+								</p>
 							</p>
 						</div>
 						<p>

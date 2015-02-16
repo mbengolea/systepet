@@ -62,6 +62,10 @@
 							<label for="edad"> Edad:</label> <input type="text" id="edad" name="edad" readonly="readonly" />
 						</p>
 						<p>
+							<label for="vive"> Vive:</label> <input type="checkbox" name="vive"
+								<c:if test="${empty error_validacion ? mascota.isVivo() : (param.vive != null)}">checked="checked"</c:if>/>
+						</p>
+						<p>
 							<input class="button" type="submit" name="guardar" value="Guardar" />
 						</p>
 					</form>

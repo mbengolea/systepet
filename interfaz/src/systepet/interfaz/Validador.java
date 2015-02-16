@@ -14,7 +14,7 @@ public class Validador {
 	
 	public static boolean esDniValido(String dni) {
 		try {
-			Long.parseLong(dni);
+			Long.parseLong(dni.trim());
 			return true;
 		} catch (NumberFormatException e) {
 			return false;

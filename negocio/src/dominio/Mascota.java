@@ -12,7 +12,7 @@ public class Mascota {
 	private String raza;
 	private Date fechaNacimiento;
 	private Duenio duenio;
-	private boolean vivo;
+	private boolean vivo = true;
 	private HistoriaClinica historiaClinica;
 
 	public int getId() {

@@ -70,8 +70,8 @@ public class DuenioController extends HttpServlet {
 		if(duenio == null){
 			duenio = new Duenio();
 		}
-		duenio.setNombre(nombre);
-		duenio.setDni(dni);
+		duenio.setNombre(nombre.trim());
+		duenio.setDni(dni.trim());
 		duenio.setTelefono(telefono);
 		duenio.setDireccion(direccion);
 		duenio.setEmail(email);

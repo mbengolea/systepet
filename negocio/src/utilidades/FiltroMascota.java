@@ -12,7 +12,7 @@ public class FiltroMascota {
 		super();
 		this.dni = dni;
 		this.nombreDuenio = nombreDuenio;
-		this.nombreMascota = nombreDuenio;
+		this.nombreMascota = nombreMascota;
 		this.telefono = telefono;
 		this.historiaClinica = historiaClinica;
 	}

@@ -3,6 +3,7 @@ package dominio;
 import java.util.Date;
 
 public class AplicacionAgendada {
+	private int id;
 	private Date fechaAplicacion;
 	private Vacuna vacuna;
 	private boolean recordatorioEnviado;
@@ -16,12 +17,24 @@ public class AplicacionAgendada {
 		return fechaAplicacion;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Vacuna getVacuna() {
 		return vacuna;
 	}
 
 	public void setRecordatorioEnviado(boolean recordatorioEnviado) {
 		this.recordatorioEnviado = recordatorioEnviado;
+	}
+
+	public boolean isRecordatorioEnviado() {
+		return recordatorioEnviado;
 	}
 
 }
