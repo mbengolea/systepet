@@ -252,52 +252,38 @@ CREATE TABLE vacuna (
 );
 
 
---
--- TOC entry 2018 (class 0 OID 16411)
--- Dependencies: 174
--- Data for Name: configenvio; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY configenvio (emailorigen, password, plantilla, habilitado, diasanterioridad, usuario, asunto) FROM stdin;
-systepet@gmail.com	systepet1	Hola, ${nombre_dueño}!\\nRecuerde que debe aplicarle la vacuna ${nombre_vacuna} a ${nombre_mascota} el día ${fecha_agendada}.\\nVeterinaria PetyPet	f	7	systepet	Prueba de envio de mail
-\.
+INSERT INTO configenvio VALUES ('systepet@gmail.com', 'systepet1', 'Hola, ${nombre_dueño}!\nRecuerde que debe aplicarle la vacuna ${nombre_vacuna} a ${nombre_mascota} el día ${fecha_agendada}.\nVeterinaria PetyPet', false, 7, 'systepet', 'Prueba de envio de mail');
 
 
 --
--- TOC entry 2025 (class 0 OID 16489)
+-- TOC entry 1981 (class 0 OID 16489)
 -- Dependencies: 182
--- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: systepet
 --
 
-COPY roles (nivel, nombre) FROM stdin;
-1	veterinario
-10	jefe_veterinario
-20	administrador
-\.
+INSERT INTO roles VALUES (1, 'veterinario');
+INSERT INTO roles VALUES (10, 'jefe_veterinario');
+INSERT INTO roles VALUES (20, 'administrador');
 
 
 --
--- TOC entry 2014 (class 0 OID 16395)
+-- TOC entry 1978 (class 0 OID 16395)
 -- Dependencies: 170
--- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: systepet
 --
 
-COPY usuarios (user_name, user_pass, nombre) FROM stdin;
-tilly	tilly	Matilde
-\.
+INSERT INTO usuarios VALUES ('tilly', 'tilly', 'Matilde');
 
 
 --
--- TOC entry 2015 (class 0 OID 16400)
+-- TOC entry 1979 (class 0 OID 16400)
 -- Dependencies: 171
--- Data for Name: usuariosroles; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: usuariosroles; Type: TABLE DATA; Schema: public; Owner: systepet
 --
 
-COPY usuariosroles (user_name, role_name) FROM stdin;
-tilly	jefe_veterinario
-tilly	veterinario
-tilly	veterinario
-\.
+INSERT INTO usuariosroles VALUES ('tilly', 'jefe_veterinario');
+INSERT INTO usuariosroles VALUES ('tilly', 'veterinario');
+INSERT INTO usuariosroles VALUES ('tilly', 'administrador');
 
 
 --
