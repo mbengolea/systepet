@@ -43,7 +43,9 @@
 						</p>
 						<p>
 							<sec:one roles="administrador">
+								<input class="button" type="submit" name="cancelar_guardar_usuario" value="Cancelar" />
 								<input class="button" type="submit" name="guardar_usuario" value="Guardar" />
+								
 							</sec:one>
 						</p>
 					</form>

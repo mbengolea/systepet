@@ -70,6 +70,7 @@
 						</p>						
 						<p>
 							<sec:one roles="administrador">
+								<input class="button" type="submit" name="cancelar_guardar_configuracion_recordatorios" value="Cancelar" />
 								<input class="button" type="submit" name="guardar_configuracion_recordatorios" value="Guardar" />
 							</sec:one>
 						</p>

@@ -13,7 +13,7 @@
 		<%@ include file="menu.jsp"%>
 		<div id="contents">
 			<div class="container">
-				<div class="header">Mascota</div>
+				<div class="header">Nueva vacuna</div>
 				<div class="contents">
 					<form method="POST" action="VacunaController">
 						<p>
@@ -29,7 +29,8 @@
 							<label for="notas"> Notas:</label> <input type="text" name="notas" />
 						</p>
 						<p>
-							<input class="button" type="submit" name="guardar" value="Guardar" />
+							<input class="button" type="submit" name="cancelar_nueva_vacuna" value="Cancelar" />
+							<input class="button" type="submit" name="guardar" value="Guardar" /> 
 						</p>
 					</form>
 				</div>

@@ -50,6 +50,13 @@
 							<span class="error">La especie específica es obligatoria</span>
 						</p>
 						<p>
+							<label for="sexo"> Sexo:</label> <select id="sexo" name="sexo">
+								<option value="MACHO" ${'MACHO'.equals(empty error_validacion ? mascota.getSexo().name() : param.sexo) ? 'selected' : ''}>macho</option>
+								<option value="HEMBRA" ${'HEMBRA'.equals(empty error_validacion ? mascota.getSexo().name() : param.sexo) ? 'selected' : ''}>hembra</option>
+								
+							</select>
+						</p>
+						<p>
 							<label for="fecha_nacimiento"> Fecha de nacimiento:</label> <input type="text"  id="fecha_nacimiento" name="fecha_nacimiento" />
 						</p>
 						<p class="error-p <c:if test="${empty fecha_nacimiento_invalida}">invisible</c:if>">
@@ -66,6 +73,7 @@
 								<c:if test="${empty error_validacion ? mascota.isVivo() : (param.vive != null)}">checked="checked"</c:if>/>
 						</p>
 						<p>
+							<input class="button" type="submit" name="cancelar_guardar_mascota" value="Cancelar" />
 							<input class="button" type="submit" name="guardar" value="Guardar" />
 						</p>
 					</form>

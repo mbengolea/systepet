@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dominio.Vacuna;
-
 import utilidades.BaseDeDatos;
+import dominio.Vacuna;
 
 /**
  * Servlet implementation class MascotaController
@@ -41,10 +40,20 @@ public class VacunaController extends HttpServlet {
 			forward = editarVacuna(request);
 		} else if (parameters.containsKey("guardar")) {
 			forward = guardarVacuna(request);
+		} else if (parameters.containsKey("cancelar_nueva_vacuna")) {
+			forward = Paginas.INICIO;
 		} else if (parameters.containsKey("buscar_vacuna")) {
 			forward = buscarVacunas(request);
 		} else if (parameters.containsKey("borrar_vacuna")) {
 			forward = darDeBajaVacuna(request);
+		} else if (parameters.containsKey("cancelar_buscar_vacuna")) {
+			forward = Paginas.INICIO;
+		} else if (parameters.containsKey("cancelar_lista_vacuna")) {
+			forward = Paginas.BUSCAR_VACUNA;
+		} else if (parameters.containsKey("volver_a_lista")) {
+			forward = volverALista(request);
+		} else if (parameters.containsKey("cancelar_guardar_vacuna")) {
+			forward = Paginas.VER_VACUNA;
 		} else if (parameters.containsKey("vacunaId")) {
 			forward = verVacuna(request);
 		}
@@ -96,11 +105,22 @@ public class VacunaController extends HttpServlet {
 		Vacuna vacuna = BaseDeDatos.getBaseDeDatos().buscarVacuna(
 				Integer.parseInt(id));
 		request.setAttribute("vacuna", vacuna);
+		request.setAttribute("con_volver", true);
 		return Paginas.VER_VACUNA;
+	}
+
+	private String volverALista(HttpServletRequest request) {
+		String nombre = (String) request.getSession().getAttribute(
+				"filtroVacunas");
+		List<Vacuna> vacunas = BaseDeDatos.getBaseDeDatos().buscarVacunas(
+				nombre);
+		request.setAttribute("vacunas", vacunas);
+		return Paginas.LISTAR_VACUNAS;
 	}
 
 	private String buscarVacunas(HttpServletRequest request) {
 		String nombre = request.getParameter("nombre");
+		request.getSession().setAttribute("filtroVacunas", nombre);
 		List<Vacuna> vacunas = BaseDeDatos.getBaseDeDatos().buscarVacunas(
 				nombre);
 		request.setAttribute("vacunas", vacunas);

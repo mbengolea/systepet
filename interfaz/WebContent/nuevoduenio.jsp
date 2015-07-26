@@ -13,7 +13,7 @@
 		<%@ include file="menu.jsp"%>
 		<div id="contents">
 			<div class="container">
-				<div class="header">Mascota</div>
+				<div class="header">Nuevo dueño</div>
 				<div class="contents">
 					<form method="POST" action="DuenioController">
 						<p>
@@ -47,6 +47,7 @@
 							<label for="notificaciones"> Recibe notificaciones:</label> <input type="checkbox" name="notificaciones" <c:if test="${!empty param.notificaciones}">checked="checked"</c:if> />
 						</p>
 						<p>
+							<input class="button" type="submit" name="cancelar_nuevo_duenio" value="Cancelar" />
 							<input class="button" type="submit" name="guardar_duenio" value="Guardar" />
 						</p>
 					</form>

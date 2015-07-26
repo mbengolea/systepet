@@ -20,6 +20,7 @@ import dominio.Duenio;
 import dominio.EspecieDeMascota;
 import dominio.HistoriaClinica;
 import dominio.Mascota;
+import dominio.Mascota.Sexo;
 import dominio.Recordatorio;
 import dominio.Rol;
 import dominio.Usuario;
@@ -69,7 +70,7 @@ public class BaseDeDatos {
 		}
 		return lista;
 	}
-	
+
 	public List<Vacuna> buscarVacunasActivas() {
 		List<Vacuna> lista = new ArrayList<Vacuna>();
 		try (Connection conn = this.ds.getConnection()) {
@@ -199,7 +200,7 @@ public class BaseDeDatos {
 			}
 			// ejecuto la consulta
 			ResultSet rs = st.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				DuenioBasico duenio = new DuenioBasico();
 				duenio.setId(rs.getInt(1));
 				duenio.setDni(rs.getString(2));
@@ -280,7 +281,7 @@ public class BaseDeDatos {
 	private void agregarMascotas(Duenio duenio) {
 		try (Connection conn = this.ds.getConnection()) {
 			PreparedStatement st = conn
-					.prepareStatement("SELECT id, nombre, especie, especieespecifica, raza, fechanacimiento, vivo FROM mascota WHERE duenioid = ?");
+					.prepareStatement("SELECT id, nombre, especie, especieespecifica, raza, fechanacimiento, vivo, sexo FROM mascota WHERE duenioid = ?");
 			st.setInt(1, duenio.getId());
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
@@ -292,8 +293,10 @@ public class BaseDeDatos {
 				mascota.setRaza(rs.getString(5));
 				mascota.setFechaNacimiento(rs.getDate(6));
 				mascota.setVivo(rs.getBoolean(7));
+				mascota.setSexo(Sexo.valueOf(rs.getString(8)));
 				mascota.setDuenio(duenio);
-				duenio.getMascotas().add(mascota);
+				duenio.agregarMascota(mascota);
+
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException("Error al buscar las mascotas", e);
@@ -450,7 +453,7 @@ public class BaseDeDatos {
 			}
 			// ejecuto la consulta
 			ResultSet rs = st.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				MascotaBasica mascota = new MascotaBasica(rs.getInt(1),
 						rs.getString(2), rs.getString(3), rs.getString(4));
 				lista.add(mascota);
@@ -488,7 +491,7 @@ public class BaseDeDatos {
 		try (Connection conn = this.ds.getConnection()) {
 			if (mascota.getId() > 0) {
 				PreparedStatement st = conn
-						.prepareStatement("UPDATE mascota SET nombre=?, especie=?, especieespecifica=?, raza=?, fechanacimiento=?, vivo=? WHERE id = ?;");
+						.prepareStatement("UPDATE mascota SET nombre=?, especie=?, especieespecifica=?, raza=?, fechanacimiento=?, vivo=?, sexo=? WHERE id = ?;");
 				st.setString(1, mascota.getNombre());
 				st.setString(2, mascota.getEspecie().name());
 				st.setString(3, mascota.getEspecieEspecifica());
@@ -496,13 +499,14 @@ public class BaseDeDatos {
 				st.setDate(5, new java.sql.Date(mascota.getFechaNacimiento()
 						.getTime()));
 				st.setBoolean(6, mascota.isVivo());
-				st.setInt(7, mascota.getId());
+				st.setString(7, mascota.getSexo().name());
+				st.setInt(8, mascota.getId());
 				st.execute();
 				return mascota;
 			} else {
 				// es una nueva mascota
 				PreparedStatement st = conn
-						.prepareStatement("INSERT INTO mascota(nombre, especie, especieespecifica, raza, fechanacimiento, vivo, duenioid) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id;");
+						.prepareStatement("INSERT INTO mascota(nombre, especie, especieespecifica, raza, fechanacimiento, vivo, duenioid, sexo) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id;");
 				st.setString(1, mascota.getNombre());
 				st.setString(2, mascota.getEspecie().name());
 				st.setString(3, mascota.getEspecieEspecifica());
@@ -511,6 +515,7 @@ public class BaseDeDatos {
 						.getTime()));
 				st.setBoolean(6, mascota.isVivo());
 				st.setInt(7, mascota.getDuenio().getId());
+				st.setString(8, mascota.getSexo().name());
 				st.execute();
 				ResultSet rs = st.getResultSet();
 				if (rs.next()) {
@@ -718,7 +723,7 @@ public class BaseDeDatos {
 			PreparedStatement st = conn
 					.prepareStatement("SELECT emailorigen, password, plantilla, habilitado, diasanterioridad, usuario, asunto FROM configenvio LIMIT 1;");
 			ResultSet rs = st.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				ConfiguracionEnvioRecordatorios config = new ConfiguracionEnvioRecordatorios();
 				config.setEmailOrigen(rs.getString(1));
 				config.setPassword(rs.getString(2));
@@ -729,38 +734,41 @@ public class BaseDeDatos {
 				config.setAsunto(rs.getString(7));
 				return config;
 			} else {
-				throw new RuntimeException("No existe la configuración de envío de recordatorios");
+				throw new RuntimeException(
+						"No existe la configuración de envío de recordatorios");
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Error al buscar la configuración de recordatorios", e);
+			throw new RuntimeException(
+					"Error al buscar la configuración de recordatorios", e);
 		}
 	}
 
 	public List<Recordatorio> buscarAplicacionesAgendadas(Date desde, Date hasta) {
 		try (Connection conn = this.ds.getConnection()) {
 			PreparedStatement st = conn
-					.prepareStatement("SELECT r.nombreduenio, r.nombremascota, r.email, v.nombre, a.id, a.fechaaplicacion" +
-							" FROM recordatorio r " +
-							" INNER JOIN aplicacionagendada a ON r.aplicacionid = a.id " +
-							" INNER JOIN vacuna ON a.vacunaid = v.id " +
-							" WHERE a.recordatorioenviado = ? " +
-							" AND a.fechaaplicacion >= ? " +
-							" AND a.fechaaplicacion <= ? ");
+					.prepareStatement("SELECT r.nombreduenio, r.nombremascota, r.email, v.nombre, a.id, a.fechaaplicacion"
+							+ " FROM recordatorio r "
+							+ " INNER JOIN aplicacionagendada a ON r.aplicacionid = a.id "
+							+ " INNER JOIN vacuna v ON a.vacunaid = v.id "
+							+ " WHERE a.recordatorioenviado = ? "
+							+ " AND a.fechaaplicacion >= ? "
+							+ " AND a.fechaaplicacion <= ? ");
 			st.setBoolean(1, false);
 			st.setTimestamp(2, new Timestamp(desde.getTime()));
 			st.setTimestamp(3, new Timestamp(hasta.getTime()));
 			ResultSet rs = st.executeQuery();
 			List<Recordatorio> recordatorios = new ArrayList<Recordatorio>();
-			while (rs.next()){
+			while (rs.next()) {
 				Vacuna vacuna = new Vacuna();
 				vacuna.setNombre(rs.getString(4));
-				AplicacionAgendada apli = new AplicacionAgendada(rs.getDate(6), vacuna);
+				AplicacionAgendada apli = new AplicacionAgendada(rs.getDate(6),
+						vacuna);
 				apli.setId(rs.getInt(5));
 				apli.setRecordatorioEnviado(false);
 				Recordatorio recordatorio = new Recordatorio(rs.getString(1),
 						rs.getString(2), rs.getString(3), apli);
 				recordatorios.add(recordatorio);
-			} 
+			}
 			return recordatorios;
 		} catch (SQLException e) {
 			throw new RuntimeException("Error al buscar los recordatorios", e);
@@ -775,8 +783,9 @@ public class BaseDeDatos {
 			st.setInt(2, aplicacion.getId());
 			st.execute();
 		} catch (SQLException e) {
-			throw new RuntimeException("Error al actualizar la acplicación agendada", e);
-		}		
+			throw new RuntimeException(
+					"Error al actualizar la acplicación agendada", e);
+		}
 	}
 
 	public void guardarConfiguracionEnvioRecordatorios(
@@ -793,7 +802,8 @@ public class BaseDeDatos {
 			st.setString(7, config.getAsunto());
 			st.execute();
 		} catch (SQLException e) {
-			throw new RuntimeException("Error al guardar la configuración de recordatorios", e);
+			throw new RuntimeException(
+					"Error al guardar la configuración de recordatorios", e);
 		}
 	}
 }

@@ -5,6 +5,10 @@ import java.util.Date;
 import dominio.Edad.Unidad;
 
 public class Mascota {
+	public enum Sexo {
+		MACHO, HEMBRA;
+	}
+
 	private int id;
 	private String nombre;
 	private EspecieDeMascota especie;
@@ -14,6 +18,7 @@ public class Mascota {
 	private Duenio duenio;
 	private boolean vivo = true;
 	private HistoriaClinica historiaClinica;
+	private Sexo sexo;
 
 	public int getId() {
 		return id;
@@ -68,7 +73,10 @@ public class Mascota {
 	}
 
 	public void setDuenio(Duenio duenio) {
-		this.duenio = duenio;
+		if (this.duenio == null) {
+			this.duenio = duenio;
+			this.duenio.agregarMascota(this);
+		}
 	}
 
 	public boolean isVivo() {
@@ -88,7 +96,7 @@ public class Mascota {
 		this.historiaClinica.setMascota(this);
 	}
 
-	public Edad getEdad(){
+	public Edad getEdad() {
 		long diff = new Date().getTime() - this.fechaNacimiento.getTime();
 		int dias = (int) (diff / (24 * 60 * 60 * 1000));
 		if (dias > 90) {
@@ -102,5 +110,13 @@ public class Mascota {
 		} else {
 			return new Edad(dias, Unidad.DIA);
 		}
+	}
+
+	public Sexo getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
 	}
 }

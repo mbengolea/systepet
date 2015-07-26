@@ -32,6 +32,7 @@
 							<span class="error">El telefono solo puede contener números</span>
 						</p>						
 						<p>
+							<input class="button" type="submit" name="cancelar_buscar_duenio" value="Cancelar" />
 							<input class="button" type="submit" name="buscar_duenio" value="Buscar" />
 						</p>
 					</form>

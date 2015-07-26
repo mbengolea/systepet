@@ -76,10 +76,17 @@ public class Duenio {
 	public void setMascotas(List<Mascota> mascotas) {
 		this.mascotas = mascotas;
 	}
-	
-	public Mascota getMascotaPorId(int id){
-		for (Mascota mascota : this.mascotas){
-			if (mascota.getId() == id){
+
+	public void agregarMascota(Mascota mascota) {
+		if (this.mascotas != null && !mascotas.contains(mascota)) {
+			this.mascotas.add(mascota);
+			mascota.setDuenio(this);
+		}
+	}
+
+	public Mascota getMascotaPorId(int id) {
+		for (Mascota mascota : this.mascotas) {
+			if (mascota.getId() == id) {
 				return mascota;
 			}
 		}

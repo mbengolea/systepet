@@ -41,6 +41,7 @@
 							<span class="error">El código de historia clínica solo puede contener números</span>
 						</p>						
 						<p>
+							<input class="button" type="submit" name="cancelar_buscar_mascota" value="Cancelar" />
 							<input class="button" type="submit" name="buscar_mascota" value="Buscar" />
 						</p>
 					</form>

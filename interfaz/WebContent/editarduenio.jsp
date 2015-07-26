@@ -49,6 +49,7 @@
 							<input type="checkbox" name="notificaciones" <c:if test="${empty error_validacion ? duenio.isRecibeNotificaciones() : (param.notificaciones != null)}">checked="checked"</c:if> />
 						</p>
 						<p>
+							<input class="button" type="submit" name="cancelar_guardar_duenio" value="Cancelar" />
 							<input class="button" type="submit" name="guardar_duenio" value="Guardar" />
 						</p>
 					</form>

@@ -6,7 +6,7 @@ public class Vacuna {
 	private String droga;
 	private String laboratorio;
 	private String notas;
-	private boolean activa;
+	private boolean activa = true;
 
 	public int getId() {
 		return id;

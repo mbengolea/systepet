@@ -38,6 +38,10 @@
 								<c:if test="${vacuna.isActiva()}">checked="checked"</c:if> onClick="return false;" />
 						</p>
 						<p>
+							<c:if test="${!empty con_volver}">
+								<input class="button" type="submit" name="volver_a_lista"
+									value="Volver" />
+							</c:if>
 							<sec:one roles="jefe_veterinario">
 							<input class="button" type="submit" name="borrar_vacuna" value="Baja"
 								onclick="return confirm('Está seguro de que quiere dar de baja esta vacuna?')" />

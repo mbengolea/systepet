@@ -264,6 +264,11 @@ a.button {
 	margin: auto;
 }
 
+a.belowtable {
+	float: right;
+	margin-top: 20px;
+}
+
 input[type=submit].small-button {
 	min-width: 22px;
 	height: 22px;
@@ -416,7 +421,7 @@ table.tabla tr:last-child td:last-child {
 .drop_menu li:hover ul li a {
 	padding:7px;
 	display:block;
-	width:168px;
+	width:230px;
 	text-indent:15px;
 	background-color: #E5E5E5;
 }

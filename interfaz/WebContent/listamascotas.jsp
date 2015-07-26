@@ -28,10 +28,11 @@
 							<td>${mascota.getNombre()}</td>
 							<td>${mascota.getEspecie()}</td>
 							<td>${mascota.getNombreDuenio()}</td>
-							<td><a class="button" href="MascotaController?mascotaId=<c:out value="${mascota.getId()}" />"> Ver </a></td>
+							<td><a class="button" href="MascotaController?es_lista&amp;mascotaId=<c:out value="${mascota.getId()}" />"> Ver </a></td>
 						</tr>
 					</c:forEach>
 				</table>
+				<p><a class="button belowtable" href="MascotaController?cancelar_lista_mascota"> Volver </a></p>
 			</div>
 		</div>
 	</div>

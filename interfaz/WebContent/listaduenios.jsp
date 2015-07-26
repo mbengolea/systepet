@@ -13,7 +13,7 @@
 		<%@ include file="menu.jsp"%>
 		<div id="contents">
 			<div class="container">
-				<div class="header">Resultado de búsqueda de dueños</div>
+				<div class="header">Lista de dueños</div>
 				<table class="tabla">
 					<tr>
 						<th>Nombre</th>
@@ -32,6 +32,7 @@
 						</tr>
 					</c:forEach>
 				</table>
+				<p><a class="button belowtable" href="DuenioController?cancelar_lista_duenio"> Volver </a></p>
 			</div>
 		</div>
 	</div>

@@ -65,6 +65,8 @@
 							<input class="button" type="submit" name="nueva_mascota" value="Nueva mascota" />
 							<!--  -->
 							<input class="button" type="submit" name="editar_duenio" value="Modificar" />
+							<!--  -->
+							<c:if test="${!empty con_volver}"><input class="button" type="submit" name="volver_a_lista" value="Volver" /></c:if>
 						</p>
 					</form>
 				</div>

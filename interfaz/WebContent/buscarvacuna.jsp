@@ -19,6 +19,7 @@
 							<label for="nombre">Nombre:</label><input type="text" name="nombre" />
 						</p>
 						<p>
+							<input class="button" type="submit" name="cancelar_buscar_vacuna" value="Cancelar" />
 							<input class="button" type="submit" name="buscar_vacuna" value="Buscar" />
 						</p>
 					</form>

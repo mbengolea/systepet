@@ -31,6 +31,7 @@
 							<label for="notas"> Notas: </label><input type="text" name="notas" value="${vacuna.getNotas()}" />
 						</p>
 						<p>
+							<input class="button" type="submit" name="cancelar_guardar_vacuna" value="Cancelar" />
 							<input class="button" type="submit" name="guardar" value="Guardar" />
 						</p>
 					</form>

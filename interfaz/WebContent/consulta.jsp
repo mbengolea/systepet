@@ -71,6 +71,7 @@
 							</p>
 						</div>
 						<p>
+							<input class="button" type="submit" name="historia_clinica" value="Cancelar" />
 							<input class="button" type="submit" name="guardar_consulta" value="Guardar" />
 						</p>
 					</form>

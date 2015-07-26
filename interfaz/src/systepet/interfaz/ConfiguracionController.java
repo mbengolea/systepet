@@ -1,7 +1,6 @@
 package systepet.interfaz;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -12,9 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utilidades.BaseDeDatos;
+import utilidades.EnviadorDeRecordatorios;
 import dominio.ConfiguracionEnvioRecordatorios;
-import dominio.Rol;
-import dominio.Usuario;
 
 @WebServlet("/ConfiguracionController")
 public class ConfiguracionController extends HttpServlet {
@@ -35,11 +33,23 @@ public class ConfiguracionController extends HttpServlet {
 		Map<String, String[]> parameters = request.getParameterMap();
 		if (parameters.containsKey("guardar_configuracion_recordatorios")) {
 			forward = guardarConfiguracion(request);
+		} else if (parameters
+				.containsKey("cancelar_guardar_configuracion_recordatorios")) {
+			forward = Paginas.INICIO;
 		} else if (parameters.containsKey("editar_configuracion_recordatorios")) {
 			forward = verConfiguracionRecordatorios(request);
+		} else if (parameters.containsKey("envio_manual_recordatorios")) {
+			forward = enviarRecordatorios(request);
+		} else if (parameters.containsKey("cerrar_confirmacion")) {
+			forward = Paginas.INICIO;
 		}
 		RequestDispatcher view = request.getRequestDispatcher(forward);
 		view.forward(request, response);
+	}
+
+	private String enviarRecordatorios(HttpServletRequest request) {
+		new EnviadorDeRecordatorios().enviarRecordatorios();
+		return Paginas.CONFIRMACION_ENVIO_RECORDATORIOS;
 	}
 
 	private String guardarConfiguracion(HttpServletRequest request) {
@@ -70,7 +80,7 @@ public class ConfiguracionController extends HttpServlet {
 		BaseDeDatos.getBaseDeDatos().guardarConfiguracionEnvioRecordatorios(
 				config);
 		request.getSession().setAttribute("configuracion", config);
-		return Paginas.EDITAR_CONFIGURACION_RECORDATORIOS;
+		return Paginas.INICIO;
 	}
 
 	private String verConfiguracionRecordatorios(HttpServletRequest request) {

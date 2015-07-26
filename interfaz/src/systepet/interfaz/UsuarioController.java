@@ -36,10 +36,22 @@ public class UsuarioController extends HttpServlet {
 			forward = buscarUsuarios(request);
 		} else if (parameters.containsKey("nuevo_usuario")) {
 			forward = nuevoUsuario(request);
+		} else if (parameters.containsKey("cancelar_nuevo_usuario")) {
+			forward = Paginas.INICIO;
+		} else if (parameters.containsKey("cancelar_lista_usuario")) {
+			forward = Paginas.INICIO;
+		} else if (parameters.containsKey("cancelar_guardar_usuario")) {
+			forward = Paginas.VER_USUARIO;
+		} else if (parameters.containsKey("volver_a_lista")) {
+			forward = volverALista(request);
 		} else if (parameters.containsKey("guardar_usuario")) {
 			forward = guardarUsuario(request);
 		} else if (parameters.containsKey("cambiar_contrasena")) {
 			forward = cambiarContrasena(request);
+		} else if (parameters.containsKey("cancelar_guardar_contrasena")) {
+			forward = Paginas.VER_USUARIO;
+		} else if (parameters.containsKey("cancelar_guardar_mi_contrasena")) {
+			forward = Paginas.INICIO;
 		} else if (parameters.containsKey("cambiar_mi_contrasena")) {
 			forward = cambiarMiContrasena(request);
 		} else if (parameters.containsKey("guardar_nuevo_usuario")) {
@@ -103,6 +115,9 @@ public class UsuarioController extends HttpServlet {
 		String password = request.getParameter("password");
 		String password2 = request.getParameter("password2");
 		if (!validarParaGuardarContrasena(password, password2, request)) {
+			if (request.getParameter("mi_contrasena") != null) {
+				request.setAttribute("mi_contrasena", "mi_contrasena");
+			}
 			return Paginas.CAMBIAR_CONTRASENA;
 		}
 		Usuario usuario = (Usuario) request.getSession()
@@ -123,7 +138,8 @@ public class UsuarioController extends HttpServlet {
 
 	private String cambiarMiContrasena(HttpServletRequest request) {
 		String nombreUsuario = request.getUserPrincipal().getName();
-		Usuario usuario = BaseDeDatos.getBaseDeDatos().buscarUsuario(nombreUsuario);
+		Usuario usuario = BaseDeDatos.getBaseDeDatos().buscarUsuario(
+				nombreUsuario);
 		request.getSession().setAttribute("usuario", usuario);
 		request.setAttribute("mi_contrasena", "mi_contrasena");
 		return Paginas.CAMBIAR_CONTRASENA;
@@ -140,7 +156,7 @@ public class UsuarioController extends HttpServlet {
 		request.setAttribute("roles", Rol.values());
 		return Paginas.EDITAR_USUARIO;
 	}
-	
+
 	private String nuevoUsuario(HttpServletRequest request) {
 		request.setAttribute("roles", Rol.values());
 		return Paginas.NUEVO_USUARIO;
@@ -151,10 +167,17 @@ public class UsuarioController extends HttpServlet {
 		Usuario usuario = BaseDeDatos.getBaseDeDatos().buscarUsuario(
 				nombreUsuario);
 		request.getSession().setAttribute("usuario", usuario);
+		request.setAttribute("con_volver", true);
 		return Paginas.VER_USUARIO;
 	}
 
 	private String buscarUsuarios(HttpServletRequest request) {
+		List<Usuario> usuarios = BaseDeDatos.getBaseDeDatos().buscarUsuarios();
+		request.setAttribute("usuarios", usuarios);
+		return Paginas.LISTAR_USUARIOS;
+	}
+
+	private String volverALista(HttpServletRequest request) {
 		List<Usuario> usuarios = BaseDeDatos.getBaseDeDatos().buscarUsuarios();
 		request.setAttribute("usuarios", usuarios);
 		return Paginas.LISTAR_USUARIOS;

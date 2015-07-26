@@ -1,6 +1,5 @@
 package utilidades;
 
-import java.security.Security;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -25,6 +24,7 @@ public class EnviadorDeRecordatorios {
 	}
 
 	public void enviarRecordatorios() {
+		System.out.println("Empezando el envio recordatorios");
 		ConfiguracionEnvioRecordatorios config = BaseDeDatos.getBaseDeDatos()
 				.buscarConfiguracionEnvioDeRecordatorios();
 		final String username = config.getUsuario();
@@ -37,10 +37,11 @@ public class EnviadorDeRecordatorios {
 		Date hasta = getHasta(desde, config);
 		List<Recordatorio> recordatorios = BaseDeDatos.getBaseDeDatos()
 				.buscarAplicacionesAgendadas(desde, hasta);
-
+		System.out.println("Hay " + recordatorios.size()
+				+ " recordatorios para enviar.");
 		for (Recordatorio record : recordatorios) {
 			String destino = record.getEmail();
-
+			System.out.println("Tratatndo de enviar recordatorio a " + destino);
 			final MimeMessage msg = new MimeMessage(session);
 
 			try {
@@ -54,10 +55,13 @@ public class EnviadorDeRecordatorios {
 				Transport.send(msg);
 				this.recordatorioEnviado(record);
 			} catch (Exception e) {
-				System.out.println("No se ha podido enviar el recordatorio");
+				System.out.println("No se ha podido enviar el recordatorio a "
+						+ destino);
 				e.printStackTrace();
 			}
+
 		}
+		System.out.println("Terminó el envio recordatorios");
 	}
 
 	private Date getHasta(Date desde, ConfiguracionEnvioRecordatorios config) {
@@ -74,7 +78,7 @@ public class EnviadorDeRecordatorios {
 	}
 
 	private Session getEmailSession(final String username, final String password) {
-//		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+		// Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		// Get a Properties object
 		Properties props = new Properties();

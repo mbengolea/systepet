@@ -28,6 +28,7 @@
 						</tr>
 					</c:forEach>
 				</table>
+				<p><a class="button belowtable" href="UsuarioController?cancelar_lista_usuario"> Volver </a></p>
 			</div>
 		</div>
 	</div>

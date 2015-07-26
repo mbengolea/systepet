@@ -28,6 +28,7 @@
 						</tr>
 					</c:forEach>
 				</table>
+				<p><a class="button belowtable" href="VacunaController?cancelar_lista_vacuna"> Volver </a></p>
 			</div>
 		</div>
 	</div>

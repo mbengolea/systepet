@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>interfaz</display-name>
 	<welcome-file-list>
-		<welcome-file>buscarduenio.jsp</welcome-file>
+		<welcome-file>inicio.jsp</welcome-file>
 	</welcome-file-list>
 
 	<security-constraint>
