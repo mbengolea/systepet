@@ -33,10 +33,19 @@
 								name="especie" value="${mascota.getEspecie()}"
 								readonly="readonly" />
 						</p>
-						<p>
-							<label for="raza"> Raza:</label> <input type="text" name="raza"
-								value="${mascota.getRaza()}" readonly="readonly" />
-						</p>
+						<c:if test="${mascota.getEspecie().tieneRaza()}">
+							<p>
+								<label for="raza"> Raza:</label> <input type="text" name="raza"
+									value="${mascota.getRaza()}" readonly="readonly" />
+							</p>
+						</c:if>
+						<c:if test="${mascota.getEspecie().necesitaEspecieEspecifica()}">
+							<p>
+								<label for="especie_especifica"> Especifica:</label> <input
+									type="text" id="especie_especifica" name="especie_especifica"
+									readonly="readonly" value="${mascota.getEspecieEspecifica()}" />
+							</p>
+						</c:if>
 						<p>
 							<label for="sexo"> Sexo:</label> <input type="text" name="sexo"
 								value="${mascota.getSexo()}" readonly="readonly" />

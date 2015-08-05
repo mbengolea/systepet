@@ -54,8 +54,8 @@
 						</p>
 					</c:if>
 					<p>
-						<label for="detalles">Detalles:</label>
-						<textarea name="detalles" readonly="readonly">${consulta.getObservaciones()}</textarea>
+						<label>Detalles:</label>
+						<textarea readonly="readonly">${consulta.getObservaciones()}</textarea>
 					</p>
 					<hr />
 					</c:forEach>

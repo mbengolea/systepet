@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://www.samaxes.com/taglib/secure" prefix="sec" %>
+<%@ taglib uri="http://www.samaxes.com/taglib/secure" prefix="sec"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,55 +27,75 @@
 				<div class="contents">
 					<form method="POST" action="MascotaController">
 						<p>
-							<label for="nombre_mascota"> Nombre de la mascota:</label> <input type="text" name="nombre_mascota"
+							<label for="nombre_mascota"> Nombre de la mascota:</label> <input
+								type="text" name="nombre_mascota"
 								value="${empty error_validacion ? mascota.getNombre() : param.nombre}" />
 						</p>
-						<p class="error-p <c:if test="${empty nombre_invalido}">invisible</c:if>">
+						<p
+							class="error-p <c:if test="${empty nombre_invalido}">invisible</c:if>">
 							<span class="error">El nombre es obligatorio</span>
 						</p>
 						<p>
-							<label for="especie"> Especie:</label> <select id="especie" name="especie">
-								<option value="CANINO" ${'CANINO'.equals(empty error_validacion ? mascota.getEspecie().name() : param.raza) ? 'selected' : ''}>canino</option>
-								<option value="FELINO" ${'FELINO'.equals(empty error_validacion ? mascota.getEspecie().name() : param.raza) ? 'selected' : ''}>felino</option>
-								<option value="OTRO" ${'OTRO'.equals(empty error_validacion ? mascota.getEspecie().name() : param.raza) ? 'selected' : ''}>otro</option>
+							<label for="especie"> Especie:</label> <select id="especie"
+								name="especie">
+								<option value="CANINO"
+									${'CANINO'.equals(empty error_validacion ? mascota.getEspecie().name() : param.raza) ? 'selected' : ''}>canino</option>
+								<option value="FELINO"
+									${'FELINO'.equals(empty error_validacion ? mascota.getEspecie().name() : param.raza) ? 'selected' : ''}>felino</option>
+								<option value="OTRO"
+									${'OTRO'.equals(empty error_validacion ? mascota.getEspecie().name() : param.raza) ? 'selected' : ''}>otro</option>
 							</select>
 						</p>
 						<p id="raza_p">
-							<label for="raza"> Raza:</label> <input type="text" id="raza" name="raza" value="${empty error_validacion ? mascota.getRaza() : param.raza}" />
+							<label for="raza"> Raza:</label> <input type="text" id="raza"
+								name="raza"
+								value="${empty error_validacion ? mascota.getRaza() : param.raza}" />
 						</p>
 						<p id="especie_especifica_p">
-							<label for="especie_especifica"> Especifica:</label> <input type="text" id="especie_especifica" 
-							name="especie_especifica" value="${empty error_validacion ? mascota.getEspecieEspecifica() : param.especie_especifica}" />
+							<label for="especie_especifica"> Especifica:</label> <input
+								type="text" id="especie_especifica" name="especie_especifica"
+								value="${empty error_validacion ? mascota.getEspecieEspecifica() : param.especie_especifica}" />
 						</p>
-						<p class="error-p <c:if test="${empty especie_especifica_invalida}">invisible</c:if>">
+						<p
+							class="error-p <c:if test="${empty especie_especifica_invalida}">invisible</c:if>">
 							<span class="error">La especie específica es obligatoria</span>
 						</p>
 						<p>
 							<label for="sexo"> Sexo:</label> <select id="sexo" name="sexo">
-								<option value="MACHO" ${'MACHO'.equals(empty error_validacion ? mascota.getSexo().name() : param.sexo) ? 'selected' : ''}>macho</option>
-								<option value="HEMBRA" ${'HEMBRA'.equals(empty error_validacion ? mascota.getSexo().name() : param.sexo) ? 'selected' : ''}>hembra</option>
-								
+								<option value="MACHO"
+									${'MACHO'.equals(empty error_validacion ? mascota.getSexo().name() : param.sexo) ? 'selected' : ''}>macho</option>
+								<option value="HEMBRA"
+									${'HEMBRA'.equals(empty error_validacion ? mascota.getSexo().name() : param.sexo) ? 'selected' : ''}>hembra</option>
+
 							</select>
 						</p>
 						<p>
-							<label for="fecha_nacimiento"> Fecha de nacimiento:</label> <input type="text"  id="fecha_nacimiento" name="fecha_nacimiento" />
+							<label for="fecha_nacimiento"> Fecha de nacimiento:</label> <input
+								type="text" id="fecha_nacimiento" name="fecha_nacimiento" />
 						</p>
-						<p class="error-p <c:if test="${empty fecha_nacimiento_invalida}">invisible</c:if>">
-							<span class="error">La fecha de nacimiento debe estar en formato día/mes/año</span>
-						</p>					
-						<p class="error-p <c:if test="${empty fecha_nacimiento_futuro}">invisible</c:if>">
-							<span class="error">La fecha de nacimiento no puede ser posterior al día de hoy</span>
-						</p>					
-						<p>
-							<label for="edad"> Edad:</label> <input type="text" id="edad" name="edad" readonly="readonly" />
+						<p
+							class="error-p <c:if test="${empty fecha_nacimiento_invalida}">invisible</c:if>">
+							<span class="error">La fecha de nacimiento debe estar en
+								formato día/mes/año</span>
 						</p>
-						<p>
-							<label for="vive"> Vive:</label> <input type="checkbox" name="vive"
-								<c:if test="${empty error_validacion ? mascota.isVivo() : (param.vive != null)}">checked="checked"</c:if>/>
+						<p
+							class="error-p <c:if test="${empty fecha_nacimiento_futuro}">invisible</c:if>">
+							<span class="error">La fecha de nacimiento no puede ser
+								posterior al día de hoy</span>
 						</p>
 						<p>
-							<input class="button" type="submit" name="cancelar_guardar_mascota" value="Cancelar" />
-							<input class="button" type="submit" name="guardar" value="Guardar" />
+							<label for="edad"> Edad:</label> <input type="text" id="edad"
+								name="edad" readonly="readonly" />
+						</p>
+						<p>
+							<label for="vive"> Vive:</label> <input type="checkbox"
+								name="vive"
+								<c:if test="${empty error_validacion ? mascota.isVivo() : (param.vive != null)}">checked="checked"</c:if> />
+						</p>
+						<p>
+							<input class="button" type="submit"
+								name="cancelar_guardar_mascota" value="Cancelar" /> <input
+								class="button" type="submit" name="guardar" value="Guardar" />
 						</p>
 					</form>
 				</div>

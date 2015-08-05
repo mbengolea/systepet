@@ -2,8 +2,6 @@ package dominio;
 
 import java.util.Date;
 
-import dominio.Edad.Unidad;
-
 public class Mascota {
 	public enum Sexo {
 		MACHO, HEMBRA;
@@ -88,6 +86,9 @@ public class Mascota {
 	}
 
 	public HistoriaClinica getHistoriaClinica() {
+		if (this.historiaClinica == null) {
+			this.historiaClinica = new HistoriaClinica();
+		}
 		return this.historiaClinica;
 	}
 
@@ -97,19 +98,7 @@ public class Mascota {
 	}
 
 	public Edad getEdad() {
-		long diff = new Date().getTime() - this.fechaNacimiento.getTime();
-		int dias = (int) (diff / (24 * 60 * 60 * 1000));
-		if (dias > 90) {
-			int meses = dias / 30;
-			if (meses > 12) {
-				int anios = dias / 365;
-				return new Edad(anios, Unidad.ANIO);
-			} else {
-				return new Edad(meses, Unidad.MES);
-			}
-		} else {
-			return new Edad(dias, Unidad.DIA);
-		}
+		return Edad.edadPara(new Date(), this.fechaNacimiento);
 	}
 
 	public Sexo getSexo() {

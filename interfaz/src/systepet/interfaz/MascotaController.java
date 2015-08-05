@@ -32,6 +32,7 @@ import dominio.Vacuna;
 @WebServlet("/MascotaController")
 public class MascotaController extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
 	private static final String FORMATO_FECHA = "dd/MM/yyyy";
 
 	protected void doGet(HttpServletRequest request,
@@ -170,6 +171,7 @@ public class MascotaController extends HttpServlet {
 		return Paginas.CONSULTA;
 	}
 
+	@SuppressWarnings("unchecked")
 	private String agregarVacuna(HttpServletRequest request) {
 		String idString = request.getParameter("vacunaId");
 		if (idString != null) {
@@ -187,6 +189,7 @@ public class MascotaController extends HttpServlet {
 		return Paginas.CONSULTA;
 	}
 
+	@SuppressWarnings("unchecked")
 	private String agregarAplicacionAgendada(HttpServletRequest request) {
 		String idString = request.getParameter("vacunaAAplicarId");
 		String fechaAplicacionString = request.getParameter("fecha_aplicacion");

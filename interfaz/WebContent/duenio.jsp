@@ -55,7 +55,7 @@
 							<c:forEach var="mascota" items="${duenio.getMascotas()}">
 								<tr>
 									<td>${mascota.getId()}</td>
-									<td>${mascota.getNombre()}</td>
+									<td class="${mascota.isVivo() ? "mascota-viva" : "mascota-muerta" }">${mascota.getNombre()}</td>
 									<td><fmt:formatDate pattern="dd-MM-yyyy" value="${mascota.getFechaNacimiento()}"/></td>
 									<td><a class="button" href="MascotaController?mascotaId=${mascota.getId()}"> Ver </a></td>
 								</tr>

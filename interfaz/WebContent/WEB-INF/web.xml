@@ -36,7 +36,7 @@
 		<auth-method>FORM</auth-method>
 		<form-login-config>
 			<form-login-page>/ingreso.jsp</form-login-page>
-			<form-error-page>/loginerror.html</form-error-page>
+			<form-error-page>/loginerror.jsp</form-error-page>
 		</form-login-config>
 	</login-config>
 </web-app>

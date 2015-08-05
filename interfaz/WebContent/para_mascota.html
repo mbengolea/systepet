@@ -8,12 +8,16 @@
 			var meses = dias / 30;
 			if (meses > 12) {
 				var anios = dias / 365;
-				$("#edad").val(Math.round(anios) + " años");
+				if (meses % 12 != 0) {
+					$("#edad").val(Math.floor(anios) + " años, " + Math.floor(meses % 12) + " meses");
+				} else {
+					$("#edad").val(Math.floor(anios) + " años");
+				}
 			} else {
-				$("#edad").val(Math.round(meses) + " meses");
+				$("#edad").val(Math.floor(meses) + " meses");
 			}
 		} else {
-			$("#edad").val(Math.round(dias) + " dias");
+			$("#edad").val(Math.floor(dias) + " dias");
 		}
 	}
 	$(function() {
@@ -27,21 +31,22 @@
 	});
 </script>
 <script>
-  $(function() {
-	  $( "#especie" ).change(function() {
-		  var seleccionado = $( this ).val();
-		  if (seleccionado == "OTRO" ){
+	function mostrarRazaOEspecifica(){
+		var seleccionado = $( "#especie" ).val();
+		if (seleccionado == "OTRO" ){
 			  $("#raza_p").hide();
 			  $("#especie_especifica_p").show();
-			  $("#raza").val("");
-			  $("#especie_especifica").val("");
-		  } else {
+		} else {
 			  $("#raza_p").show();
 			  $("#especie_especifica_p").hide();
-			  $("#raza").val("");
-			  $("#especie_especifica").val("");
-		  }
+		}
+	}
+  $(function() {
+	  $( "#especie" ).change(function() {
+		  mostrarRazaOEspecifica();
+		  $("#raza").val("");
+		  $("#especie_especifica").val("");
 		});
-	  $("#especie_especifica_p").hide();
+	  mostrarRazaOEspecifica();
   });
   </script>

@@ -33,7 +33,7 @@
 						</p>
 						<div id="vacunas">
 							<p>
-								<label for="vacuna">Vacunas:</label>
+								<label for="vacuna">Vacunas dadas:</label>
 								<c:forEach var="vacunaAgregada" items="${consulta.getVacunasRealizadas()}">
 									<input type="text" readonly="readonly" value="${vacunaAgregada.getNombre()}" />
 							</p>
@@ -44,7 +44,7 @@
 									<c:forEach var="vacuna" items="${vacunas}">
 										<option value="${vacuna.getId()}">${vacuna.getNombre()}</option>
 									</c:forEach>
-								</select> <input class="small-button" type="submit" name="agregar_vacuna" value="+" />
+								</select> <input class="small-button" type="submit" name="agregar_vacuna" value="+ Vacuna" />
 							</p>
 						</div>
 						<div id="vacunas_a_aplicar">
@@ -62,8 +62,8 @@
 									</c:forEach>
 								</select> 
 								<p class="no-label-p">
-								<input type="text" id="fecha_aplicacion" name="fecha_aplicacion" />
-								<input class="small-button" type="submit" name="agregar_aplicacion_agendada" value="+" />
+								<input class="medium" type="text" id="fecha_aplicacion" name="fecha_aplicacion" />
+								<input class="small-button" type="submit" name="agregar_aplicacion_agendada" value="+ Agendar Vacuna" />
 								</p>
 								<p class="error-p <c:if test="${empty fecha_invalida}">invisible</c:if>">
 									<span class="error">La fecha de aplicacion no puede estar vacía</span>

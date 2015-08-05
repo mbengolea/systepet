@@ -194,6 +194,10 @@ input.small {
 	width: 64px;
 }
 
+input[type=text].medium {
+	width: 130px;
+}
+
 input[type=text],input[type=password],textarea,select {
 	font-family: Arial;
 	font-size: 14px;
@@ -286,6 +290,10 @@ input[type=submit].small-button {
 	font-weight: bold;
 	font-size: 14px;
 	float: right;
+}
+
+.mascota-muerta {
+	text-decoration: line-through;
 }
 
 table.tabla {

@@ -170,7 +170,8 @@ CREATE TABLE mascota (
     raza character varying(50),
     fechanacimiento timestamp without time zone,
     duenioid integer,
-    vivo boolean
+    vivo boolean,
+    sexo character varying(20)
 );
 
 

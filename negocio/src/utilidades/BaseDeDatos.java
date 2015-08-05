@@ -333,8 +333,8 @@ public class BaseDeDatos {
 			PreparedStatement st = conn
 					.prepareStatement("SELECT c.id, v.id, v.nombre, v.droga, v.laboratorio "
 							+ " FROM consulta c "
-							+ " LEFT JOIN aplicacion ap ON c.id = ap.consultaid "
-							+ " LEFT JOIN vacuna v ON ap.vacunaid = v.id "
+							+ " INNER JOIN aplicacion ap ON c.id = ap.consultaid "
+							+ " INNER JOIN vacuna v ON ap.vacunaid = v.id "
 							+ " WHERE c.mascotaid = ? ORDER BY c.id");
 			st.setInt(1, mascota.getId());
 			ResultSet rs = st.executeQuery();
@@ -358,8 +358,8 @@ public class BaseDeDatos {
 			PreparedStatement st = conn
 					.prepareStatement("SELECT c.id, v.id, v.nombre, v.droga, v.laboratorio, ap.fechaaplicacion "
 							+ " FROM consulta c "
-							+ " LEFT JOIN aplicacionagendada ap ON c.id = ap.consultaid "
-							+ " LEFT JOIN vacuna v ON ap.vacunaid = v.id "
+							+ " INNER JOIN aplicacionagendada ap ON c.id = ap.consultaid "
+							+ " INNER JOIN vacuna v ON ap.vacunaid = v.id "
 							+ " WHERE c.mascotaid = ? ORDER BY c.id");
 			st.setInt(1, mascota.getId());
 			ResultSet rs = st.executeQuery();
@@ -430,6 +430,13 @@ public class BaseDeDatos {
 				sql += " m.id = ? ";
 				primerFiltro = false;
 			}
+			if (!primerFiltro) {
+				sql += " AND ";
+			} else {
+				sql += " WHERE ";
+			}
+			// sólo busco mascotas vivas
+			sql += " m.vivo = ? ";
 			PreparedStatement st = conn.prepareStatement(sql);
 			// pongo los valores en los filtros
 			int contadorDeFiltros = 1;
@@ -451,6 +458,8 @@ public class BaseDeDatos {
 			if (filtro.getHistoriaClinica() != null) {
 				st.setInt(contadorDeFiltros++, filtro.getHistoriaClinica());
 			}
+			// sólo busco mascotas vivas
+			st.setBoolean(contadorDeFiltros++, true);
 			// ejecuto la consulta
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
@@ -623,6 +632,7 @@ public class BaseDeDatos {
 		}
 	}
 
+	@SuppressWarnings("resource")
 	public void guardarUsuario(Usuario usuario) {
 		try (Connection conn = this.ds.getConnection()) {
 			// me fijo si es un usuario nuevo
